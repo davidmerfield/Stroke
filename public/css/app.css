@@ -1,0 +1,44 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+body {
+   background: rgba(0,0,0,0.07);
+}
+
+#itch {
+   position: absolute;
+   top: 12px;
+   left: 12px;
+   width: 300px;
+   display: none;
+}
+#caret {
+   position: relative;top: -3000px
+}
+
+textarea,
+#strikes {
+   min-height: 800px;
+   padding: 0;
+   border: none;
+   outline: none;
+   background: rgba(0,0,0,0);
+   position: absolute;
+   z-index: 0;
+   top: 24px;
+   left: 50%;
+   line-height: 24px;
+   font: normal 24px/36px monospace;
+}
+
+#strikes {
+   width: 436px
+}
+
+#strikes textarea {
+   position: absolute;
+   width: 436px;
+   left: 0;
+   text-decoration: line-through;
+}
+
+textarea {z-index: 10;overflow: hidden}
