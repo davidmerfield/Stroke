@@ -35,12 +35,13 @@ $(function() {
     function populate () {
         var foo = '',
             rows = 2,
+            cols = parseInt($('#input').attr('cols')) + 1;
 
-        for (var i = 0;i < rows; i++){
+        for (var i = 0;i < rows*cols; i++){
           foo+= '1 ';
         }
 
-        for (var i = 0;i < rows; i++){
+        for (var i = 0;i < rows*cols; i++){
           foo+= '0';
         }
 
@@ -48,11 +49,12 @@ $(function() {
         //   foo+= 'new line \n';
         // }
 
-        $('#input').html(foo)
+        $('#input').val(foo)
     }
 
     function strike(position, content) {
         
+
 
         console.log('called');
 
@@ -64,7 +66,7 @@ $(function() {
             positionX = characterWidth*(position%cols);
 
         var position = position + 1;
-
+        
         console.log('position ' + position);
         console.log('positionX: ' + positionX);
 

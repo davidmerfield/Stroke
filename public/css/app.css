@@ -11,23 +11,34 @@ body {
    width: 300px;
    display: none;
 }
-
 #caret {
    position: relative;top: -3000px
 }
 
-#input {
+textarea,
+#strikes {
    min-height: 800px;
-   width: 600px;
-   border: 1px solid #000;
-   padding: 12px;
+   padding: 0;
+   border: none;
    outline: none;
    background: rgba(0,0,0,0);
    position: absolute;
    z-index: 0;
    top: 24px;
-   left: 30%;
+   left: 50%;
    line-height: 24px;
    font: normal 24px/36px monospace;
 }
 
+#strikes {
+   width: 436px
+}
+
+#strikes textarea {
+   position: absolute;
+   width: 436px;
+   left: 0;
+   text-decoration: line-through;
+}
+
+textarea {z-index: 10;overflow: hidden}
