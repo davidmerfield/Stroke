@@ -1,33 +1,141 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
+/* Reset */
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-size: 100%;
+   font: inherit;
+   vertical-align: baseline;
+}
+
 body {
-   background: rgba(0,0,0,0.07);
+   margin: 0;
+   background: rgba(214, 205, 188, 0.57);
+   font: 400 1.125em 'Droid Sans Mono', monospace;
+   line-height: 1.667em;
+   text-rendering: optimizeLegibility;
+ }
+
+body.dark {
+   background: #000;
+   color: #fff
 }
 
-#itch {
+body.dark #output {background: #000;color: #fff}
+body.dark #output:after {background: rgba(255,255,255,0.5)}
+ 
+ a, .link {
+    text-decoration: none;
+    border-bottom: 2px solid rgba(0,0,100,0.1);
+    color: rgb(55, 93, 192);
+ }
+
+
+header {
    position: absolute;
-   top: 12px;
-   left: 12px;
+   top: 7em;
+   left: 3em;
    width: 300px;
-   display: none;
 }
 
+nav {
+   position: absolute;
+   top: 0;
+   right: 0;
+   width: 10em;
+}
+nav a {
+   transition: opacity 500ms cubic-bezier(0.165, 0.840, 0.440, 1.000);
+   clear: both;
+   opacity:0.3;
+   display: block;
+   line-height: 2em;
+   border-bottom: none;
+   font-size: 0.88em;
+   background: url('/public/images/audio_mute.svg') no-repeat 0 center;
+   background-size: 1.25em;
+   padding-left: 2em;
+   font-weight: bold;
+   color: #000;
+}
+nav a:hover {opacity: 1.0}
+
+#lights {
+background-image: url('/public/images/lights.svg');
+}
+
+#select {
+background-image: url('/public/images/text.svg');
+}
+
+#audio_toggle.enabled {
+   background-image: url('/public/images/audio.svg');
+}
+#new_page {
+   position: absolute;
+   top: 50%;
+   right: 0;
+   margin-top: -3em;
+   background: rgba(0,0,0,0.05);
+   height: 6em;
+   width: 12em;
+   border: 2px solid rgba(0,0,0,0.2);
+   border-radius: 0.33em 0 0 0.33em;
+   border-right: none;
+   text-align: center;
+   line-height: 6em;
+   font-size: 1.33em
+}
 #caret {
    position: relative;top: -3000px
 }
 
-#input {
+#input,
+#output {
    min-height: 800px;
-   width: 600px;
-   border: 1px solid #000;
-   padding: 12px;
+   width: 46em;
+   padding: 4em;
    outline: none;
-   background: rgba(0,0,0,0);
+   background: #fff;
    position: absolute;
-   z-index: 0;
-   top: 24px;
-   left: 30%;
-   line-height: 24px;
-   font: normal 24px/36px monospace;
+   top: 0;
+   bottom: 0;
+   right: 50%;
+   margin-right: -27em;
+   overflow: scroll;
 }
 
+#output:after{
+   width: 0.5em;
+   height: 1.667em;
+   margin-top: -0.334em;
+   margin-bottom: -0.234em;
+   background: rgba(0,0,0,0.25);
+   content: "";
+   position: relative;
+   top: 4px;
+   display: inline-block;
+   -webkit-transition: all 1.3s ease-in-out;
+   -webkit-animation-direction: normal;
+   -webkit-animation-duration: 1.3s;
+   -webkit-animation-iteration-count: infinite;
+   -webkit-animation-name: blink;
+   -webkit-animation-timing-function: ease-in-out;
+}
+
+#input {position: absolute;top: -10000px;margin: 0;bottom: auto;}
+
+@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}

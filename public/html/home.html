@@ -5,16 +5,22 @@
   <title>Typewriter</title>
   <link rel="stylesheet" type="text/css" href="/public/css/app.css">
   <script src="/public/js/jquery.js"></script>
-  <script src="/public/js/jquery.selection.js"></script>
   <script src="/public/js/index.js"></script>
 </head>
 <body>
-   <div id="header">
-      <a href="/new">+ New page</a>
-      <a href="/" id="logo">Typewriter</a>
-      <p id="itch">This is a cross between a typewriter and a straitjacket. Heavily inspired by Khoi Vinh's tweet. Hemingway would have used this.</p>
-      <p></p>
-   </div>
-   <div id="input" contenteditable="true">Hello</div>
-   <a href="#" id="helper">strike</a>
+  <header>
+    <a href="/" id="logo">Typoso</a>
+    <h1>This is not a text editor. Everything you commit to the page stays. No delete, no bullshit.</h1>
+    <p>This is a typewriter. Hemingway would have used this.</p>
+    <a>To get started, start typing.</a>
+  </header>
+  <a href="/new" id="new_page">+ New page</a>
+  <nav>
+      <a href="#" id="audio_toggle" class="enabled">Sound</a>
+      <a href="#" id="lights">Lights</a>
+      <a href="#" id="help">Help</a>
+<!--       <a href="#" id="select">Select all</a>
+ -->  </nav>
+  <textarea id="input"></textarea>
+  <div id="output"></div> 
 </html>
