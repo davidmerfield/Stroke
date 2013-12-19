@@ -26,8 +26,11 @@ body {
 
 
 header {
-   display: block;
-   height: 3em;
+   width: 20em;
+   position: fixed;
+   left: 0;
+   top: 0;
+   bottom: 0;
    line-height: 3em;
    background: rgba(214, 205, 188, 0.57);
 }
@@ -46,10 +49,6 @@ h1 em {
    color: rgba(0,0,0,0.33);
 }
 nav {
-   width: 46em;
-   position: absolute;
-   left: 50%;
-   margin-left: -23em;
 }
 
 nav a {
