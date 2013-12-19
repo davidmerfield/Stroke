@@ -10,19 +10,7 @@
     };
 })(jQuery);
 
-function selectAll(el) {
-    if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
-        var range = document.createRange();
-        range.selectNodeContents(el);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-    } else if (typeof document.selection != "undefined" && typeof document.body.createTextRange != "undefined") {
-        var textRange = document.body.createTextRange();
-        textRange.moveToElementText(el);
-        textRange.select();
-    }
-}
+
 
 function getSelectionHtml() {
     var html = "";
@@ -44,6 +32,8 @@ function getSelectionHtml() {
 }
 
 $(function() {
+
+    $('#output').html($('#input').val());
 
     //Sample sound table
     var sounds = {"1":new Audio("/public/audio/1.mp3"),
@@ -76,14 +66,6 @@ $(function() {
         $(this).toggleClass('enabled');
     });
 
-    $('#lights').click(function(){
-        $('body').toggleClass('dark');
-    });
-    
-    $('#select').click(function(){
-        selectAll($('#output')[0]);
-    });
-
 
 $('body')
     .keydown(function(e){
@@ -98,6 +80,11 @@ $('body')
 
         if (keyCode === 13) {
              $('#input').val($('#input').val() + '<br />')
+        }
+
+        if (keyCode === 9) {
+            e.preventDefault();                         
+            $('#input').val($('#input').val() + '&nbsp;&nbsp;&nbsp; ')
         }
 
         if (keyCode === 8) {
