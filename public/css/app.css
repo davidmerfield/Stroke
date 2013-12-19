@@ -44,7 +44,6 @@ h1 span {letter-spacing: -0.15em}
 h1 em {
    font-style: normal;
    color: rgba(0,0,0,0.33);
-   display: none;
 }
 nav {
    width: 46em;
@@ -83,22 +82,27 @@ nav a:hover {opacity: 1.0}
 
 }
 
-#caret {
-   position: relative;top: -3000px
-}
-
 #input,
 #output {
    width: 46em;
+   height: 20em;
    outline: none;
    background: #fff;
    display: block;
    margin: 4em auto 0;
 }
 
-#input {position: absolute;top: -10000px;left: 0}
+#input {position:absolute;top:-10000px;right: auto;left: 0}
 
-#output:after{
+
+#output div:last-child br {
+   display: none!important;
+   width: 0;height: 0;
+   display: inline-block;
+   clear: none;
+}
+
+#output div:last-child:after{
    content: "";
    width: 0.5em;
    height: 1.667em;
