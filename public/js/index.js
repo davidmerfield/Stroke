@@ -68,6 +68,13 @@ $(function() {
     }
                         
 
+    $('#wrapper').click(function(){
+        $(this).attr('class','enabled')
+    });
+    $('#start').click(function(e){
+        e.preventDefault();
+        $('#wrapper').attr('class','enabled')
+    });
 
     $(window)
         .click(function(){
@@ -89,8 +96,13 @@ $(function() {
 $('body')
     .keydown(function(e){
         
+        console.log(e.which)
         var keyCode = e.which;
 
+        if(keyCode !== 91) {
+            $('#wrapper').attr('class','enabled');
+        }
+            
         // Disable arrow keys
         if (keyCode <= 40 && keyCode >= 37) {
              e.preventDefault();             
@@ -107,20 +119,12 @@ $('body')
 
             // Strike out the text that would be deleted
             var strike = document.createElement('strike'),
-
-            // Get the contents of 
-                selectedText = window.getSelection().getRangeAt();
-
-            console.log(selectedText);
-
+                selectedText = window.getSelection().getRangeAt(); 
+    
             selectedText.surroundContents(strike);
-            
+
             // Reflect strike in source textarea
              synchronize('#input');
-
-            // Move the caret to the end of the contenteditable
-            // so the user can keep typing fluidly
-            return setEndOfContenteditable($('#input')[0]);
         };
 
         synchronize('#output');
