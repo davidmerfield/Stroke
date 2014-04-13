@@ -1,6 +1,7 @@
 // Helper functions
 
 function setEndOfContenteditable(contentEditableElement) {
+    
     var range,
         selection;
 
@@ -16,6 +17,7 @@ function setEndOfContenteditable(contentEditableElement) {
 
 function getSelectionHtml() {
     var html = "";
+
     if (typeof window.getSelection != "undefined") {
         var sel = window.getSelection();
         if (sel.rangeCount) {
@@ -25,14 +27,49 @@ function getSelectionHtml() {
             }
             html = container.innerHTML;
         }
-    } else if (typeof document.selection != "undefined") {
+    }
+
+    if (typeof document.selection != "undefined") {
         if (document.selection.type == "Text") {
             html = document.selection.createRange().htmlText;
         }
     }
+
     return(html);
 }
 
+var Typewriter = {};
+
+
+var sourcePath = '/public/audio/';
+
+// should this be automated? Looks super repetitive
+Typewriter.sounds = {
+    "0":new Audio(sourcePath + "1.mp3"),
+    "1":new Audio(sourcePath + "2.mp3"),
+    "2":new Audio(sourcePath + "3.mp3"),
+    "3":new Audio(sourcePath + "4.mp3"),
+    "4":new Audio(sourcePath + "5.mp3")    
+};
+
+Typewriter.sounds.play = function() {
+    var name = Math.floor(Math.random()*5).toString();
+    sounds[name].currentTime = 0;
+    sounds[name].play();
+};
+
+Typewriter.sync = {
+
+};
+
+Typewriter.init = function() {
+
+    // This is to get around the weird highlighting
+    // issues for contenteditable
+    $('#input').append('<div><br></div>');
+
+
+};
 
 $(function() {
 
@@ -48,7 +85,6 @@ $(function() {
     };
 
     // Initiate
-    $('#input').append('<div><br></div>');
     synchronize('#output');
 
     //Sample sound table
