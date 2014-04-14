@@ -1,17 +1,11 @@
 {
   "name": "Typewriter",
   "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "A silly text editor",
   "repository": {
     "type": "git",
     "url": "https://github.com/davidmerfield/Typewriter.git"
   },
-  "author": "",
-  "license": "BSD",
   "gitHead": "c7f945440691559eb0fe7c5ca50fac8fbefacc2c",
   "devDependencies": {
     "grunt": "^0.4.4",
