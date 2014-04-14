@@ -6,7 +6,7 @@ Typewriter.init = function() {
 
     // This is to get around the weird highlighting
     // issues for contenteditable
-    $('#input').append('<div><br></div>');
+    $('#input').append('<div id="start"><br></div>');
 
     // Initiate
     Typewriter.sync('output', 'input');
@@ -57,17 +57,25 @@ $(function() {
             e.preventDefault();             
 
             // Strike out the text that would be deleted
-            var strike = document.createElement('strike'),
-                selectedText = window.getSelection().getRangeAt(); 
-    
+            var strike = document.createElement('span'),
+                span = document.createElement('span'),
+                selectedText = window.getSelection().getRangeAt();
+            
+            strike.className = 'strikeout';
+            span.innerHTML = '&#8203;';
+
+            console.log(selectedText);
+
             selectedText.surroundContents(strike);
+            selectedText.collapse(false);
+            selectedText.insertNode(span);
 
             // Reflect strike in source textarea
              Typewriter.sync('input', 'output');
         };
 
         Typewriter.sync('output', 'input');
-        util.setEndOfContenteditable($('#input')[0]);
+        util.setEndOfContenteditable('input');
 
     });
 
@@ -82,9 +90,11 @@ $(function() {
 
 function loadUtilities () {
     return {
-        setEndOfContenteditable: function(contentEditableElement) {
+        setEndOfContenteditable: function(elId) {
             var range,
                 selection;
+
+            var contentEditableElement = document.getElementById(elId);
 
             if (document.createRange) {
                 range = document.createRange();
