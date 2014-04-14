@@ -9,22 +9,13 @@ Typewriter.init = function() {
 
 };
 
-$(function() {
-
-    function synchronize(div) {
-        
-        // Update #output to reflect the changes made to #input
-        if (div === '#output'){
-            return $('#output').html($('#input').html());
-        }
-        
-        // Else update #input to reflect changes to #output
-        return $('#input').html($('#output').html());
-    };
-
-    // Initiate
-    synchronize('#output');
-
+Typewriter.sync = function(oldNodeID, newNodeID) {
+    
+    console.log
+    var newNode = document.getElementById(newNodeID),
+        oldNode = document.getElementById(oldNodeID)
+    
+    ;
 
     $('#wrapper').click(function(){
         $(this).attr('class','enabled')
@@ -79,11 +70,11 @@ $('body')
             selectedText.surroundContents(strike);
 
             // Reflect strike in source textarea
-             synchronize('#input');
+             Typewriter.sync('input', 'output');
         };
 
-        synchronize('#output');
-        setEndOfContenteditable($('#input')[0]);
+        Typewriter.sync('output', 'input');
+        util.setEndOfContenteditable($('#input')[0]);
 
     });
 
