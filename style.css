@@ -9,10 +9,10 @@
    background: #ffb7b7; /* Firefox */
 }
 
-.strikeout {
+.strikeOut {
     position: relative;
 }
-.strikeout::after {
+.strikeOut::after {
     border-bottom: 2px solid black;
     content: "";
     left: 0;
@@ -107,6 +107,7 @@ nav input {
    display: block;
    position: relative;
    margin: 8em auto;
+   padding-bottom: 1em;
 }
 
 #input {position:absolute;top:-10000px;right: auto;left: 0}
