@@ -1,51 +1,4 @@
-// Helper functions
 
-function setEndOfContenteditable(contentEditableElement) {
-    
-    var range,
-        selection;
-
-    if (document.createRange) {
-        range = document.createRange();
-        range.selectNodeContents(contentEditableElement);
-        range.collapse(false);
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
-}
-
-function getSelectionHtml() {
-    var html = "";
-
-    if (typeof window.getSelection != "undefined") {
-        var sel = window.getSelection();
-        if (sel.rangeCount) {
-            var container = document.createElement("div");
-            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-                container.appendChild(sel.getRangeAt(i).cloneContents());
-            }
-            html = container.innerHTML;
-        }
-    }
-
-    if (typeof document.selection != "undefined") {
-        if (document.selection.type == "Text") {
-            html = document.selection.createRange().htmlText;
-        }
-    }
-
-    return(html);
-}
-
-var Typewriter = {};
-
-
-var sourcePath = '/public/audio/';
-
-Typewriter.sync = {
-
-};
 
 Typewriter.init = function() {
 
@@ -143,6 +96,45 @@ $('body')
         
         $('#output div:last-child').append(String.fromCharCode(e.which));
 
-        
-    });
 });
+
+function loadUtilities () {
+    return {
+        setEndOfContenteditable: function(contentEditableElement) {
+            var range,
+                selection;
+
+            if (document.createRange) {
+                range = document.createRange();
+                range.selectNodeContents(contentEditableElement);
+                range.collapse(false);
+                selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        },
+
+        getSelectionHtml: function() {
+            var html = "";
+
+            if (typeof window.getSelection != "undefined") {
+                var sel = window.getSelection();
+                if (sel.rangeCount) {
+                    var container = document.createElement("div");
+                    for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                        container.appendChild(sel.getRangeAt(i).cloneContents());
+                    }
+                    html = container.innerHTML;
+                }
+            }
+
+            if (typeof document.selection != "undefined") {
+                if (document.selection.type == "Text") {
+                    html = document.selection.createRange().htmlText;
+                }
+            }
+
+            return(html);            
+        }
+    }
+};
