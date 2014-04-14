@@ -109,8 +109,6 @@ $(function() {
 
                 var output = [];
 
-                console.log(range);
-
                 var selEms = util.getSelectedElementTags(window);
                 var textNodes = [];
 
@@ -121,9 +119,16 @@ $(function() {
                     }
                 }
 
+                // This removes an extra element from the end of the range
+                // Don't really understand why the element is there to begin with
+                if (range.endOffset === 0) {
+                    textNodes.pop()
+                }
+
                 for (var i = 0;i<textNodes.length;i++) {
                     
                     var node = textNodes[i];
+
 
                     for (var key in node.childNodes) {
 

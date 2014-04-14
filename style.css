@@ -121,14 +121,9 @@ nav input {
 }
 
 #output div:last-child:after{
-   content: "";
-   width: 0.22em;
-   height: 1.667em;
-   margin: -0.333em 0 -0.333em 0;
+   content: "\00a0";
+   max-width: 0.25em;
    background: #ffc820;
-   position: relative;
-   top: 0;
-   left: -1px;
    display: inline-block;
 /*   -webkit-transition: all 1.3s ease-in-out;
    -webkit-animation-direction: normal;
