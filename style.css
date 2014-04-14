@@ -1,6 +1,26 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300);
 
+
+::selection {
+   background: rgba(255,0,0,0.15); /* Safari */
+   }
+::-moz-selection {
+   background: #ffb7b7; /* Firefox */
+}
+
+.strikeout {
+    position: relative;
+}
+.strikeout::after {
+    border-bottom: 2px solid black;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
 /* Reset */
 
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
@@ -101,12 +121,13 @@ nav input {
 
 #output div:last-child:after{
    content: "";
-   width: 0.16em;
+   width: 0.22em;
    height: 1.667em;
-   margin: -0.334em 0 -0.234em;
+   margin: -0.333em 0 -0.333em 0;
    background: #ffc820;
    position: relative;
-   top: 4px;
+   top: 0;
+   left: -1px;
    display: inline-block;
 /*   -webkit-transition: all 1.3s ease-in-out;
    -webkit-animation-direction: normal;
