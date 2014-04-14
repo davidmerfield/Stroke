@@ -1,6 +1,14 @@
+// Load native UI library
+var gui = require('nw.gui'); //or global.window.nwDispatcher.requireNwGui() (see https://github.com/rogerwang/node-webkit/issues/707)
+
+// Get the current window
+var win = gui.Window.get();
+
 
 var Typewriter = {},
     util = loadUtilities();
+
+    var command = false;
 
 Typewriter.init = function() {
 
@@ -55,6 +63,23 @@ $(function() {
             $('#input').append('<div><br></div>'); // make new paragraph
             e.preventDefault();
         };
+
+
+        if (keyCode === 78) {
+            
+                gui.Window.open('index.html', {
+                  "title": "Typewriter",
+                  "toolbar": false,
+                  "focus": true,
+                  "frame": true,
+                  "width": 800,
+                  "height": 500,
+                  "position": "center",
+                  "min_width": 400,
+                  "min_height": 200
+                });
+
+        }
 
         // DELETE
         if (keyCode === 8) {
