@@ -36,8 +36,6 @@ beatwriter
 punch writer
 bop writer
 
-
-
 I actually think people would use this. 
 
 this is not a tool for editing
@@ -68,7 +66,15 @@ big download button.
 --> contact prominent authors with big twitter followings
 --> stephen fry might love this
 
+# Pick a typeface
+
+Droid sans mono
+Source code pro
+inconsolata
+
 # Implementation
+
+USE RANGY
 
 Ape lots of the aspects of IA Writer, including caret.
 
@@ -78,6 +84,26 @@ Allow you to save version with and without strikethroughs
 Allow you to print version with and without strikethroughs
 
 Rich text makes most sense so strikethroughs can be included
+
+Be able to move selection caret with keys (would look like text selection). Pressing another character except delete would continue typing as normal. 
+
+Is it ok to have two 'carets'? That's weird? It would be nice to not have to use the mouse.
+
+Will need an RTF to HTML parser, html to RTF parser. Can I encode this shit as a text file?
+
+**The goal would be to be able to open the text file in another program and not see the strikethroughs.**
+
+Does the txt format allow for hidden text? Or some markup?
+
+# Issues
+
+Allow selections across multiple lines
+
+Close strike out tags after every deletion, sometimes you can keep typing inside one.
+
+Only strike out text or whitespace between text included in the selection.
+
+
 
 **File**
 - New
