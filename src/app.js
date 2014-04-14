@@ -65,20 +65,18 @@ $(function() {
         };
 
 
-        if (keyCode === 78) {
-            
-                gui.Window.open('index.html', {
-                  "title": "Typewriter",
-                  "toolbar": false,
-                  "focus": true,
-                  "frame": true,
-                  "width": 800,
-                  "height": 500,
-                  "position": "center",
-                  "min_width": 400,
-                  "min_height": 200
-                });
-
+        if (keyCode === 78 && event.ctrlKey) {
+            gui.Window.open('index.html', {
+              "title": "Typewriter",
+              "toolbar": false,
+              "focus": true,
+              "frame": true,
+              "width": 640,
+              "height": 800,
+              "position": "center",
+              "min_width": 400,
+              "min_height": 200
+            });
         }
 
         // DELETE

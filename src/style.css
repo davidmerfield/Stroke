@@ -39,6 +39,8 @@ body {
    text-rendering: optimizeLegibility;
  }
 
+body {font-size: 0.88em}
+
  a, .link {
     text-decoration: none;
     border-bottom: 2px solid rgba(0,0,100,0.1);

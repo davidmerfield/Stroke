@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "main": "index.html",
   "window": {
-      "title": "Typewriter",
+      "title": "Untitled Document",
       "toolbar": false,
       "frame": true,
-      "width": 800,
-      "height": 500,
+      "width": 640,
+      "height": 800,
       "position": "mouse",
-      "min_width": 400,
+      "min_width": 300,
       "min_height": 200
     }
 }
