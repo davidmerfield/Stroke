@@ -1,4 +1,6 @@
 
+var Typewriter = {},
+    util = loadUtilities();
 
 Typewriter.init = function() {
 
@@ -6,6 +8,8 @@ Typewriter.init = function() {
     // issues for contenteditable
     $('#input').append('<div><br></div>');
 
+    // Initiate
+    Typewriter.sync('output', 'input');
 
 };
 
@@ -17,49 +21,38 @@ Typewriter.sync = function(oldNodeID, newNodeID) {
     
     ;
 
-    $('#wrapper').click(function(){
-        $(this).attr('class','enabled')
-    });
-    $('#start').click(function(e){
-        e.preventDefault();
-        $('#wrapper').attr('class','enabled')
-    });
+    // Update #output to reflect the changes made to #input
+    return oldNode.innerHTML = newNode.innerHTML
+};
 
-    $(window)
-        .click(function(){
-            window.setTimeout(function(){
-                if (!getSelectionHtml()) {
-                    setEndOfContenteditable($('#input')[0]);
-                };
-            }, 150)
-        });
+$(function() {
 
-    $('#audio_toggle').click(function(){
-        $(this).toggleClass('enabled');
+    Typewriter.init();
+
+    $(window).click(function(){
+        window.setTimeout(function(){
+            if (!util.getSelectionHtml()) {
+                util.setEndOfContenteditable($('#input')[0]);
+            };
+        }, 150)
     });
 
-    $('#focus').click(function(){
-        setEndOfContenteditable($('#input')[0]);
-    });
-
-$('body')
-    .keydown(function(e){
+    $('body').keydown(function(e){
         
         var keyCode = e.which;
 
-        if(keyCode !== 91) {
-            $('#wrapper').attr('class','enabled');
-        }
-            
         // Disable arrow keys
         if (keyCode <= 40 && keyCode >= 37) {
              e.preventDefault();             
         };
 
-
+        if (keyCode === 13) {
+            $('#input').append('<div><br></div>');
+            e.preventDefault();
+        };
 
         if (keyCode === 8) {
-            
+                
             // Don't delete anything, you can't delete words on a typewriter
             e.preventDefault();             
 
@@ -78,14 +71,12 @@ $('body')
 
     });
 
-  $('#input')
-    .focus()
-    .keyup(function(e){
-        synchronize('#output');
-    })
-    .keypress(function(e) {        
-        
-        $('#output div:last-child').append(String.fromCharCode(e.which));
+    $('#input')
+        .focus()
+        .keyup(function(e){Typewriter.sync('output', 'input')})
+        .keypress(function(e){        
+            $('#output div:last-child').append(String.fromCharCode(e.which));        
+        });
 
 });
 
