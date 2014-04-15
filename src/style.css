@@ -1,27 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300);
 
-
-
-::selection {
-   background: rgba(255,0,0,0.15); /* Safari */
-   }
-::-moz-selection {
-   background: #ffb7b7; /* Firefox */
-}
-
-.strikeOut {
-    position: relative;
-}
-.strikeOut::after {
-    border-bottom: 2px solid #000;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 50%;
-}
-
 /* Reset */
 
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
@@ -34,13 +13,42 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
 }
 
 body {
-   font: 400 1.125em 'Droid Sans Mono', monospace;
-   line-height: 1.667em;
-   border-top: 1px solid #888;
+   font: 400 1em 'Droid Sans Mono', monospace;
+   line-height: 1.5em;
    text-rendering: optimizeLegibility;
  }
 
-body {font-size: 0.88em}
+/* Grey line underneath window frame */
+body:before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background: #888;
+  position: fixed;
+}
+
+::selection {
+   background: rgba(255,0,0,0.15); /* Safari */
+}
+::-moz-selection {
+   background: #ffb7b7; /* Firefox */
+}
+
+.strikeOut {
+    position: relative;
+}
+
+.strikeOut::after {
+    border-bottom: 2px solid #000;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+
+
 
  a, .link {
     text-decoration: none;
@@ -68,41 +76,6 @@ nav {
    padding: 0.5em 0;
 }
 
-
-#new_page {
-   border: none;
-   color: #858585;
-   text-align: center;
-   border: 2px solid #7A7A7A;
-   transition: all 400ms cubic-bezier(0.165, 0.840, 0.440, 1.000);
-   border-radius: 4px;   
-   top: 0.33em;
-   left: 50%;
-   font-weight: 600;
-   margin: 0 0.5em 0 0;
-   text-transform: uppercase;
-   letter-spacing: 1px;
-   padding: 0 0.66em;
-   font-size: 0.88em;
-   height: 2em;
-   line-height: 2.25em;
-   text-align: center;
-   display: block;
-   float: left;
-}
-
-#new_page:hover {
-   color: #E0E0E0;
-   border-color: #cccfd0
-}
-nav input {
-   line-height: 1.5em;
-   font-size: 1em;
-   padding: 0.1566em 0.5em;
-   border: 2px solid rgba(0,0,0,0.33);
-   font-family: 'Avenir Next'
-
-}
 #input,
 #output {
    width: 46em;
@@ -115,7 +88,7 @@ nav input {
    padding-bottom: 1em;
 }
 
-#input {position:absolute;top:-10000px;right: auto;left: 0}
+#input {position:absolute;top:0;left: -200%}
 
 
 #output div:last-child br {
@@ -145,3 +118,6 @@ nav input {
     90% {opacity: 0}
     100% {opacity:1}
 }
+
+
+body {font-size: 0.88em}

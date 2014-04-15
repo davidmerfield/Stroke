@@ -2,6 +2,7 @@
 var gui = require('nw.gui'); //or global.window.nwDispatcher.requireNwGui() (see https://github.com/rogerwang/node-webkit/issues/707)
 
 var win = gui.Window.get();
+win.focus();
 
 var fs = require('fs');
 
@@ -13,7 +14,7 @@ var windowPrefs = {
       "height": 800,
       "position": "center",
       "min_width": 300,
-      "min_height": 200
+      "min_height": 200,
     };
 
 var Typewriter = {},
@@ -38,7 +39,17 @@ Typewriter.buildMenu();
 
 Typewriter.newFile = function(){
 
-    var newWindow = window.open('index.html', windowPrefs);
+    var newWindow = gui.Window.open('index.html', {
+      position: 'center',
+      title: 'Untitled',
+      width: 640,
+      height: 800,
+      frame: true,
+      focus: false,
+      toolbar: false
+    });
+
+
 };
 
 Typewriter.saveFile = function(){
