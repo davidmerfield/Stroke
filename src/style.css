@@ -78,18 +78,18 @@ nav {
 
 #input,
 #output {
-   width: 46em;
-   min-height: 30em;
+   max-width: 50em;
    outline: none;
    display: block;
    position: relative;
    margin: 0 auto;
-   padding: 4em;
-   padding-bottom: 1em;
-}
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+   padding: 2em 3em;
+ }
 
 #input {position:absolute;top:0;left: -200%}
-
 
 #output div:last-child br {
    display: none!important;
@@ -120,4 +120,12 @@ nav {
 }
 
 
-body {font-size: 0.88em}
+@media all and (max-width: 960px) and (min-width: 600px) {
+
+  body {font-size: 0.88em}  
+}
+
+@media all and (max-width: 2000px) and (min-width: 960px) {
+
+  body {font-size: 1.11em}  
+}
