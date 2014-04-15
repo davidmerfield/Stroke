@@ -39,6 +39,10 @@ Typewriter.buildMenu();
 
 Typewriter.newFile = function(){
 
+
+    // See this for more control over the window
+    // https://github.com/rogerwang/node-webkit/wiki/Preserve-window-state-between-sessions
+
     var newWindow = gui.Window.open('index.html', {
       position: 'center',
       title: 'Untitled',
@@ -213,14 +217,7 @@ $(function() {
             if (selectedText.commonAncestorContainer.nodeName === '#text'){
                 strikeOut(selectedText)
             } else {
-
-                var textRanges = splitUp(selectedText),
-                    textRangeLen = textRanges.length;
-
-                for (var i = 0;i<textRangeLen;i++){
-                    strikeOut(textRanges[i]);
-                }
-                
+                splitUpAndStrike(selectedText)
             }
 
             function strikeOut(range) {
@@ -247,7 +244,7 @@ $(function() {
             // split it into a series of ranges whose common ancestor is a text node
             // then pass these ranges to strikeout()
 
-            function splitUp(range) {
+            function splitUpAndStrike(range) {
 
                 var output = [];
 
@@ -294,7 +291,7 @@ $(function() {
                                 subRange.setEnd(text, range.endOffset);
                             } 
 
-                            output.push(subRange);
+                            strikeOut(subRange);
 
                         }
                     };
