@@ -2,11 +2,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300);
 
 
-input {
-  position: absolute;
-  top: -1000px;
-  left: -1000px;
-}
 
 ::selection {
    background: rgba(255,0,0,0.15); /* Safari */

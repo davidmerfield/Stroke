@@ -1,8 +1,9 @@
 // Load native UI library
 var gui = require('nw.gui'); //or global.window.nwDispatcher.requireNwGui() (see https://github.com/rogerwang/node-webkit/issues/707)
 
-var gui = require('nw.gui');
 var win = gui.Window.get();
+
+var fs = require('fs');
 
 var windowPrefs = {
       "title": "Untitled Document",
@@ -41,16 +42,26 @@ Typewriter.newFile = function(){
 };
 
 Typewriter.saveFile = function(){
-    
-    function choose(name) {
-      var chooser = document.querySelector(name);
-      chooser.addEventListener("change", function(evt) {
-        console.log(this.value);
-      }, false);
 
-      chooser.click();  
-    }
-    choose('#saveFile');
+    function chooseFile(name) {
+        var chooser = document.querySelector(name);
+        chooser.addEventListener("change", function(evt) {
+          
+          var path = this.value,
+            output = document.getElementById('output'),
+                data = output.textContent;
+
+
+          fs.writeFile(path, data, function(err) {
+                                  if (err) throw err;
+                                  console.log('writeFile succeeded.');
+            });
+
+        }, false);
+
+        chooser.click();  
+      }
+      chooseFile('#saveDialog');
 
 };
 
