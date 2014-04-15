@@ -74,11 +74,8 @@ inconsolata
 
 # Implementation
 
-USE RANGY
+if you stop typing, perhaps increase the pulse of the caret?
 
-Ape lots of the aspects of IA Writer, including caret.
-
-Make use of full screen
 
 Allow you to save version with and without strikethroughs
 Allow you to print version with and without strikethroughs

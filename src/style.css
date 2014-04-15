@@ -2,6 +2,12 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300);
 
 
+input {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+}
+
 ::selection {
    background: rgba(255,0,0,0.15); /* Safari */
    }
@@ -129,16 +135,18 @@ nav input {
    max-width: 0.25em;
    background: #ffc820;
    display: inline-block;
-/*   -webkit-transition: all 1.3s ease-in-out;
+   -webkit-transition: all 1s ease-in-out;
    -webkit-animation-direction: normal;
-   -webkit-animation-duration: 1.3s;
+   -webkit-animation-duration: 1s;
    -webkit-animation-iteration-count: infinite;
    -webkit-animation-name: blink;
    -webkit-animation-timing-function: ease-in-out;
-*/}
+}
 
 @-webkit-keyframes blink {
     0% {opacity:1}
+    40%{opacity: 1}
     50% {opacity:0}
+    90% {opacity: 0}
     100% {opacity:1}
 }
