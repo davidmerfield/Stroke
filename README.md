@@ -1,15 +1,6 @@
 **How to set up dev environment**
 
-Make sure node.js is up to date. Make sure you have node's package manager. Navigate to project's root directory and run:
+Make sure node.js is up to date. Make sure you have node's package manager. Navigate to project's root directory, install the node modules specified in ./package.json using 
+npm install' and then run 'grunt'.
 
-```
-npm install
-```
-
-Then to build the project run:
-
-```
-grunt
-```
-
-Find the resulting .app file in /builds
+Grunt will build and package the app then place it in ./builds
