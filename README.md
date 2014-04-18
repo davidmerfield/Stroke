@@ -1,10 +1,8 @@
-# Typewriter
+### Typewriter
 
-Duplicates the functionality of a typewriter. Every keystroke is committed to the page. Deleting text will only strike it out with a line.
+Duplicates the functionality of a typewriter. Every keystroke is committed to the page. Deleting text will only strike it out with a line. Yes this is silly.
 
 See the [live demo here](http://davidmerfield.github.io/typewriter/).
-
-Yes this is silly.
 
 ### Build the desktop app
 
