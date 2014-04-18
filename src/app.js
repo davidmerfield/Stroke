@@ -26,13 +26,13 @@ Typewriter.init = function() {
     // This is to get around the weird highlighting
     // issues for contenteditable
     var firstDiv = document.createElement('div');
-    firstDiv.innerHTML = '&#8203;';
+        firstDiv.innerHTML = '&#8203;';
     var input = document.getElementById('input');
-    input.appendChild(firstDiv);
+        input.appendChild(firstDiv);
 
-Typewriter.buildMenu();
+    // Build the native UI if we're native
+    if (environment === 'desktop') {Typewriter.buildMenu()}
 
-    // Initiate
     Typewriter.sync('output', 'input');
 
 };
