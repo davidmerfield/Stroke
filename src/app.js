@@ -38,22 +38,10 @@ Typewriter.buildMenu();
 };
 
 Typewriter.newFile = function(){
-
-
     // See this for more control over the window
     // https://github.com/rogerwang/node-webkit/wiki/Preserve-window-state-between-sessions
 
-    var newWindow = gui.Window.open('index.html', {
-      position: 'center',
-      title: 'Untitled',
-      width: 640,
-      height: 800,
-      frame: true,
-      focus: false,
-      toolbar: false
-    });
-
-
+    var newWindow = gui.Window.open('index.html', windowPrefs);
 };
 
 Typewriter.saveFile = function(){
@@ -320,8 +308,7 @@ $(function() {
 
 });
 
-
-
+// I did not write any of these
 function loadUtilities () {
     return {
         rangeIntersectsNode: function(range, node) {
