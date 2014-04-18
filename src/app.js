@@ -1,27 +1,29 @@
-// Load native UI library
-var gui = require('nw.gui'); //or global.window.nwDispatcher.requireNwGui() (see https://github.com/rogerwang/node-webkit/issues/707)
-
-var win = gui.Window.get();
-win.focus();
-
-var fs = require('fs');
-
-var windowPrefs = {
-      "title": "Untitled Document",
-      "toolbar": false,
-      "frame": true,
-      "width": 640,
-      "height": 800,
-      "position": "center",
-      "min_width": 300,
-      "min_height": 200,
-    };
-
 var Typewriter = {},
-    util = loadUtilities();
+    util = loadUtilities(),
+
+    // Determine the environment in which the script is called
+    environment = typeof require !== 'undefined' ? 'desktop' : 'browser';
+
+// Declare native UI preferences 
+if (environment === 'desktop') {
+    var gui = require('nw.gui'),
+        fs = require('fs'),
+        win = gui.Window.get(),
+        windowPrefs = {
+            title: "New document",
+            position: 'center',
+            title: 'Untitled',
+            width: 640,
+            height: 800,
+            frame: true,
+            focus: false,
+            toolbar: false
+        };
+
+    win.focus();
+}
 
 Typewriter.init = function() {
-
 
     // This is to get around the weird highlighting
     // issues for contenteditable
