@@ -127,23 +127,6 @@ Typewriter.buildMenu = function(){
 
 };
 
-// Typewriter.makeTextFile = function(){
-
-//     var text = document.getElementById('output').textContent;
-
-//     var data = new Blob([text], {type: 'text/plain'});
-
-//     // If we are replacing a previously generated file we need to
-//     // manually revoke the object URL to avoid memory leaks.
-//     if (textFile !== null) {
-//       window.URL.revokeObjectURL(textFile);
-//     }
-
-//     textFile = window.URL.createObjectURL(data);
-
-//     return textFile;
-// };
-
 Typewriter.sync = function(oldNodeID, newNodeID) {
     
     var newNode = document.getElementById(newNodeID),
@@ -214,7 +197,7 @@ $(function() {
 
                 // The black line through the text
                 var strike = document.createElement('span');
-                    strike.className = 'strikeOut';
+                    strike.className = 'strike';
 
                 range.surroundContents(strike);
 
