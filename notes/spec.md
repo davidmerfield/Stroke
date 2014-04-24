@@ -3,8 +3,6 @@
 ## Names
 
 something –writer is clearer
-rough writer - make some teddy roosevelt joke
-first draft - lame
 typewriter - obvious but possible
 blockwriter - taken
 clot - no
@@ -18,6 +16,7 @@ simwriter
 unwriter -
 inkpage -
 blotwriter -
+first draft - lame
 hammer - 
 beatwriter
 anvil
@@ -56,26 +55,19 @@ Always onwards, always forwards.
 one press of the key, one character
 (you can't hold down key and produce lines of characters)
 
-# marketing
+# homepage
 
 homepage of a beam of light falling on white window (matches os) with text being typed and text particles flying.
 
-big download button.
-
-––> get khoi onboard before launch
---> contact prominent authors with big twitter followings
---> stephen fry might love this
-
 # Pick a typeface
 
-Droid sans mono
+Droid sans mono? yes
 Source code pro
-inconsolata
+inconsolata maybe
 
 # Implementation
 
 if you stop typing, perhaps increase the pulse of the caret?
-
 
 Allow you to save version with and without strikethroughs
 Allow you to print version with and without strikethroughs
@@ -99,8 +91,6 @@ Allow selections across multiple lines
 Close strike out tags after every deletion, sometimes you can keep typing inside one.
 
 Only strike out text or whitespace between text included in the selection.
-
-
 
 **File**
 - New
