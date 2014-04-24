@@ -148,6 +148,19 @@ $(function() {
         }, 150)
     });
 
+    var previousHeight = document.body.offsetHeight;
+
+    function ensureCaretIsVisible () {
+        console.log('Previous height was ' + previousHeight);
+        var newHeight = document.body.offsetHeight;
+        console.log('Current height is: ' + newHeight);
+        if (newHeight > previousHeight) {
+            console.log('Need to move to end of page');
+            window.scrollTo(0, previousHeight);
+            previousHeight = newHeight;
+        };
+    }
+
     // Typing Handler
     $('body').keydown(function(e){
         
@@ -281,6 +294,7 @@ $(function() {
 
         Typewriter.sync('output', 'input');
         util.setEndOfContenteditable('input');
+        ensureCaretIsVisible();
 
     });
 
@@ -288,7 +302,7 @@ $(function() {
         .focus()
         .keyup(function(e){Typewriter.sync('output', 'input')})
         .keypress(function(e){        
-            $('#output div:last-child').append(String.fromCharCode(e.which));        
+            $('#output div:last-child').append(String.fromCharCode(e.which));   
         });
 
 });
