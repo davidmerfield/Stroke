@@ -1,92 +1,85 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300);
 
 /* Reset */
-
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
-   margin: 0;
-   padding: 0;
-   border: 0;
-   font-size: 100%;
-   font: inherit;
-   vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  position: relative;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
 }
 
 body {
-   font: 400 1em 'Droid Sans Mono', monospace;
-   line-height: 1.5em;
-   text-rendering: optimizeLegibility;
- }
-
-::selection {
-   background: rgba(255,0,0,0.15); /* Safari */
-}
-::-moz-selection {
-   background: #ffb7b7; /* Firefox */
+  font: 400 1em / 1.5em 'Droid Sans Mono', monospace;
+  color: #191919;
+  text-rendering: optimizeLegibility;
 }
 
-.strikeOut {
-    position: relative;
-}
-
-.strikeOut::after {
-    border-bottom: 2px solid #000;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 50%;
-}
-
-#input,
-#output {
-   max-width: 50em;
-   outline: none;
-   display: block;
-   position: relative;
-   margin: 0 auto;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
-   padding: 2em 3em;
- }
-
-#input {position:absolute;top:0;left: -200%}
-
-#output div:last-child br {
-   display: none!important;
-   width: 0;height: 0;
-   display: inline-block;
-   clear: none;
-}
-
-#output div:last-child:after{
-   content: "\00a0";
-   max-width: 0.25em;
-   background: #ffc820;
-   display: inline-block;
-   -webkit-transition: all 1s ease-in-out;
-   -webkit-animation-direction: normal;
-   -webkit-animation-duration: 1s;
-   -webkit-animation-iteration-count: infinite;
-   -webkit-animation-name: blink;
-   -webkit-animation-timing-function: ease-in-out;
-}
-
-@-webkit-keyframes blink {
-    0% {opacity:1}
-    40%{opacity: 1}
-    50% {opacity:0}
-    90% {opacity: 0}
-    100% {opacity:1}
-}
-
+/* All the elements will scale because their dimensions are declared in ems */
 @media all and (max-width: 960px) and (min-width: 600px) {
-
   body {font-size: 0.88em}  
 }
 
 @media all and (max-width: 2000px) and (min-width: 960px) {
-
   body {font-size: 1.11em}  
+}
+
+/* Holds the text the user types */
+#input {
+  position:absolute;
+  top: -100%;
+  overflow: hidden;
+  height: 0;
+  width: 0;
+}
+
+/* Renders the text the user has typed */
+#output {
+  margin: 0 auto;
+  padding: 2em 3em;
+  max-width: 50em;
+}
+
+/* This is bad a hack to solve issues with my js */
+#output div:last-child br {
+  display: none!important;
+  width: 0;
+  height: 0;
+  clear: none;
+}
+
+/* Custom caret */
+#output div:last-child:after{
+  content: "\00a0";
+  width: 0.25em;
+  background: #ffc820;
+  display: inline-block;
+  -moz-animation: blink 0.5s ease-in-out 0.3s infinite alternate;
+  -webkit-animation: blink 0.5s ease-in-out 0.3s infinite alternate;
+  animation: blink 0.5s ease-in-out 0.3s infinite alternate;
+}
+
+/* Caret animation */
+@-webkit-keyframes blink {
+  0% {opacity:1}
+  100% {opacity:0}
+}
+
+/* Selected text background color */
+::selection {background: rgba(255,0,0,0.15)}
+::-moz-selection {background: rgba(255,0,0,0.15)}
+
+/* Custom styling 'deleted' text */
+.strike::after {
+  content: "";
+  border-bottom: 0.15em solid #000;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
 }
