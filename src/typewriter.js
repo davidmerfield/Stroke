@@ -6,22 +6,17 @@ var typewriter = function () {
    output.onkeydown = function (e) {      
       
 
-   document.onkeydown = function (e) {
       if (e.which === 8) {
          e.preventDefault();
          strikeOut();
          sync(input, output)
          return setFocus(input);         
       }
-   }
-   output.onkeydown = function (e) {      
-      
-      var keyCode = e.which;
 
       if (keyCode === 16) {
          return
       }
-      
+
       if (!isArrowKey(keyCode) && e.shiftKey) {
          e.preventDefault();
          return setFocus(input)
