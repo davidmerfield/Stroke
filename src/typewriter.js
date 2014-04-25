@@ -3,57 +3,6 @@ var typewriter = function () {
    var input = document.getElementById('input'),
        output = document.getElementById('output');
    
-   function buildGUIMenu () {
-      return
-   }
-
-   // Used to check if the user has selected text
-   function selectedText() {
-      var selection = window.getSelection();
-      return selection.type === 'Range' ? selection : false
-   }
-
-   function sync (oldNode, newNode) {
-      return oldNode.innerHTML = newNode.innerHTML
-   }
-
-   function inDesktop () {
-      return typeof require !== 'undefined' ? true : false
-   }
-
-   function isArrowKey (keyCode) {
-      return (keyCode <= 40 && keyCode >= 37) ? true : false
-   }
-
-   function moveViewportToBottom () {
-      window.scrollTo(0, document.body.offsetHeight);
-   }   
-
-   function strikeOut() {
-
-      var selectedText = window.getSelection().getRangeAt();
-
-      console.log(window.getSelection());
-      console.log(window.getSelection().getRangeAt());
-
-      // The black line through the text
-      var strike = document.createElement('span');
-          strike.className = 'strike';
-
-      selectedText.surroundContents(strike);
-
-      // The 'empty' span is to counter
-      // weird behaviour when setting focus of contenteditable
-      // Without it, you can keep typing within strike out text
-      var emptySpan = document.createElement('span');
-          emptySpan.innerHTML = '&#8203;'; // zero width character
-
-      // Adds empty span after strike
-      selectedText.collapse(false);
-      selectedText.insertNode(emptySpan);
-
-   }
-
    function setFocus (el) {
       // Ensure el is contenteditable
       el.setAttribute("contentEditable", true);
