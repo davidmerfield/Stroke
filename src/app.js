@@ -156,7 +156,7 @@ $(function() {
         console.log('Current height is: ' + newHeight);
         if (newHeight > previousHeight) {
             console.log('Need to move to end of page');
-            window.scrollTo(0, previousHeight);
+            window.scrollTo(0, document.body.offsetHeight);
             previousHeight = newHeight;
         };
     }
