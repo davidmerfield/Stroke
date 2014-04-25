@@ -3,18 +3,8 @@ var typewriter = function () {
    var input = document.getElementById('input'),
        output = document.getElementById('output');
    
-   function setFocus (el) {
-      // Ensure el is contenteditable
-      el.setAttribute("contentEditable", true);
-
-      var range = document.createRange();
-          range.selectNodeContents(el);
-          range.collapse(false);
+   output.onkeydown = function (e) {      
       
-      var selection = window.getSelection();
-          selection.removeAllRanges();
-          selection.addRange(range);
-   }
 
    document.onkeydown = function (e) {
       if (e.which === 8) {
