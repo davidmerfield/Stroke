@@ -31,11 +31,17 @@ body {
 
 /* Holds the text the user types */
 #input {
-  position:absolute;
-  top: -100%;
+  position:fixed; /* Position fixed stops weird scrolling to top */
+  top: 0;
+  left: -200px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
-  height: 0;
-  width: 0;
+}
+
+#output:focus {
+  border: none;
+  outline: none;
 }
 
 /* Renders the text the user has typed */
