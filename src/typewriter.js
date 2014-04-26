@@ -7,12 +7,12 @@ var typewriter = function () {
       
       var keyCode = e.which;
 
-      // Delete key
+      // Disable delete key
       if (keyCode === 8) {
          return e.preventDefault();
       };
 
-      // CMD on Mac or CNTRL on Windows
+      // Disable CMD or CNTRL if in browser
       if (e.metaKey && !inDesktop()) { 
          if (keyCode === 82) {return} // allow reload (CMD + r) to function normally in a browser
          return e.preventDefault();

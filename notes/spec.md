@@ -86,12 +86,6 @@ Does the txt format allow for hidden text? Or some markup?
 
 # Issues
 
-Allow selections across multiple lines
-
-Close strike out tags after every deletion, sometimes you can keep typing inside one.
-
-Only strike out text or whitespace between text included in the selection.
-
 **File**
 - New
 - Open (accepts txt, rtf, md)
