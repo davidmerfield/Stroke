@@ -115,6 +115,14 @@ var typewriter = function () {
 
    }
 
+   function setHTMLof (oldNode) {
+      return {
+         to: function(newNode) {
+            return oldNode.innerHTML = newNode.innerHTML            
+         }
+      }
+   };
+
    function setFocus (el) {
 
       var range = document.createRange();
@@ -132,8 +140,12 @@ var typewriter = function () {
          console.log('Running in desktop environment!')
       } 
 
-      sync(output, input);
+      // If we're starting a new document add the first p tag
+      if (input.innerHTML === '') {
+         input.innerHTML += '<p>&#xfeff;</p>'
+      }
 
+      setHTMLof(output).to(input);
       setFocus(input);
    }();
 
