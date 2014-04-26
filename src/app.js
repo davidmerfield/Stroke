@@ -37,21 +37,21 @@ var app = function () {
         var win = gui.Window.get();
 
         file.append(new gui.MenuItem({
-            label: 'New',
+            label: 'New       N',
             click: function() {
             return newFile()
             }
         }));
 
         file.append(new gui.MenuItem({
-            label: 'Open',
+            label: 'Open       O',
             click: function() {
               return openFile()
             }
         }));
 
         file.append(new gui.MenuItem({
-            label: 'Save',
+            label: 'Save        S',
             click: function() {
               return saveFile()
             }
@@ -85,18 +85,21 @@ var app = function () {
     function saveFile () {
 
         function chooseFile(name) {
-            var chooser = document.querySelector(name);
+            var chooser = window.document.querySelector(name);
             chooser.addEventListener("change", function(evt) {
+
+            console.log(this);
               
-              var path = this.value,
-                output = document.getElementById('output'),
-                    data = output.textContent;
+             //  var path = this.value,
+             //    output = window.document.getElementById('output'),
+             //        data = output.textContent;
 
+             // window.alert(path);
 
-              fs.writeFile(path, data, function(err) {
-                                      if (err) throw err;
-                                      console.log('writeFile succeeded.');
-                });
+             //  fs.writeFile(path, data, function(err) {
+             //                          if (err) throw err;
+             //                          console.log('writeFile succeeded.');
+             //    });
 
             }, false);
 

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "main": "index.html",
   "window": {
-      "title": "Untitled Document",
-      "toolbar": false,
+      "title": "New document",
+      "toolbar": true,
       "frame": true,
       "width": 640,
       "height": 800,
