@@ -1,5 +1,9 @@
 # Typewriter App
 
+TO DO: 
+move from node webkit to macgap
+work out how to sign the app for distribution outside mac app store
+
 ## Names
 
 something –writer is clearer
