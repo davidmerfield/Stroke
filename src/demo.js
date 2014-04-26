@@ -117,7 +117,7 @@ var demo = function (el) {
 
       output.innerHTML = '';
 
-      type('Typewriter is a simple text editor.', function(){
+      type('Typewrite is a simple text editor.', function(){
 
       newLine(function(){
       
@@ -135,7 +135,7 @@ var demo = function (el) {
 
       newLine(function(){
       
-      type('It\'s perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
+      type('Typewrite is perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
       
       setHTMLof(input).to(output)
                            

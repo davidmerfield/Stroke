@@ -38,19 +38,18 @@ body {
 h2, h3, a {
    font-family: 'Droid Sans'
 }
-h3 {font-size: 0.77em;margin: 0}
-
 
 h1 {
    font-weight: bold;
    color: rgba(0,0,0,0.85);
-   font-size: 2em;
+   font-size: 2.2em;
    line-height: 1.5em;
-   letter-spacing: 0.15em;
+   letter-spacing: 0.18em;
    text-transform: uppercase;
 }
 
 h2, h3, #about * {color: rgba(0,0,0,0.55);}
+h3 {font-size: 0.77em;margin: 0}
 
 #download {
    display: inline-block;
@@ -67,7 +66,23 @@ h2, h3, #about * {color: rgba(0,0,0,0.55);}
    -moz-box-shadow: inset 0 1px 0 1px rgba(255,255,255,.15);
    box-shadow: inset 0 1px 0 1px rgba(255,255,255,.15);
    border: solid 2px #d87500;
+   transition: all 0.08s ease-in;  
 }
+
+#download:hover {
+   background-color: #ff981e;
+   border-color: #e67d00
+}
+
+#download:active {
+   -webkit-box-shadow: inset 0 1px 0 -1px rgba(0,0,0,.15);
+   -moz-box-shadow: inset 0 1px 0 -1px rgba(0,0,0,.15);
+   box-shadow: inset 0 1px 0 -1px rgba(0,0,0,.15);
+   background-color: #ef8100;
+   padding: 0.4em 1em 0.26em;
+   border-color: #d87500
+}
+
 #output {
    padding: 3em 0;
    margin-top: 1.5em;
