@@ -1,6 +1,16 @@
 var demo = function (el) {
    
    el = document.getElementById(el);
+   input = document.getElementById('input');
+   output = document.getElementById('output');
+
+   function setHTMLof (oldNode) {
+      return {
+         to: function(newNode) {
+            return oldNode.innerHTML = newNode.innerHTML            
+         }
+      }
+   };
 
    function type(string, callback, p) {
       
@@ -19,7 +29,7 @@ var demo = function (el) {
 
          p.innerHTML += character;
          type(string, callback, p)
-      }, Math.floor(Math.random()*200)); 
+      }, Math.floor(Math.random()*100)+40); 
    }
 
    function crossOut(count, callback) {
@@ -103,22 +113,41 @@ var demo = function (el) {
    }
 
    return function () {
-      type('Typewriter is a text editor for Mac', function(){
-         newLine(function(){
-            type('Hello this wroked', function(){
-               crossOut(7, function(){
-                  strike(function(){
-                     type(' worked so very wonderfully', function(){    
-                        newLine(function(){
-                           type('FUCK YES.', function(){
+      // input.onkeydown = function(e){return e.preventDefault()};
 
-                           });
-                        });
-                     }, el.lastChild);          
-                  });
-               });
-            });
-         });
+      output.innerHTML = '';
+
+      type('Typewriter is a simple text editor.', function(){
+
+      newLine(function(){
+      
+      type(' Every letter you type is permanent. No editing. No formatting. A little bit like a typewriter.', function(){
+
+      newLine(function(){
+      
+      type('Deleting text just strikes it out, so you can cover up mistskes', function(){
+
+      crossOut(9, function(){
+      
+      strike(function(){
+      
+      type(' mistakes.', function(){    
+
+      newLine(function(){
+      
+      type('It\'s perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
+      
+      setHTMLof(input).to(output)
+                           
+      });
+      });
+      }, el.lastChild);          
+      });
+      });
+      });
+      });
+      });
+      });
       });
    }()
 }
