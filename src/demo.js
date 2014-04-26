@@ -105,12 +105,24 @@ var demo = function (el) {
    return function () {
       type('Typewriter is a text editor for Mac', function(){
          newLine(function(){
-            type('Hello this worked', function(){
-               newLine();
+            type('Hello this wroked', function(){
+               crossOut(7, function(){
+                  strike(function(){
+                     type(' worked so very wonderfully', function(){    
+                        newLine(function(){
+                           type('FUCK YES.', function(){
+
+                           });
+                        });
+                     }, el.lastChild);          
+                  });
+               });
             });
          });
       });
    }()
 }
 
-demo('output');
+setTimeout(function(){
+   demo('output');
+}, 300);
