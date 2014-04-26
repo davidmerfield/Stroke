@@ -1,53 +1,7 @@
 var typewriter = function () {
 
-   var input = document.getElementById('input'),
-       output = document.getElementById('output');
-   
-   output.onkeydown = function (e) {      
-      
-      var keyCode = e.which;
-
-      if (e.which === 8) {
-         e.preventDefault();
-         strikeOut();
-         sync(input, output)
-         return setFocus(input);         
-      }
-
-      if (keyCode === 16) {
-         return
-      }
-
-      if (!isArrowKey(keyCode) && e.shiftKey) {
-         e.preventDefault();
-         return setFocus(input)
-      }
-
-      if (isArrowKey(keyCode) && !e.shiftKey) {
-         return setFocus(input)
-      }
-
-      if (isArrowKey(keyCode) && e.shiftKey) {
-         return ''
-      }
-
-      if (e.metaKey) {
-         return setFocus(input)
-      }
-
-      if (selectedText()) {
-         e.preventDefault()
-      }
-
-      return setFocus(input)
-
-   }
-
-   output.onkeyup = function (e) {
-      if (!selectedText()) {
-         return setFocus(input)
-      }
-   };
+   var input = document.getElementById('input'), // captures the user's text input
+       output = document.getElementById('output'); // renders the user's text input
 
    input.onkeydown = function (e) {      
       
@@ -58,9 +12,12 @@ var typewriter = function () {
          return e.preventDefault();
       };
 
-      // Disable copy paste and shit
-      if (e.metaKey && keyCode !== 82) {
-         e.preventDefault()
+      // CMD on Mac or CNTRL on Windows
+      if (e.metaKey) { 
+         if (keyCode === 82 && !inDesktop()) {
+            return // allow reload (CMD + r) to function normally in a browser
+         } 
+         return e.preventDefault();
       }
       
       // Arrow keys
@@ -79,19 +36,17 @@ var typewriter = function () {
 
       // Handle return key
       if (keyCode === 13) {
-         input.innerHTML += '<p></p>&#xfeff;'; // zero width char to fix contenteditable focus bug
+         input.innerHTML += '<p>&#xfeff;</p>'; // zero width char allows us to setfocus() after the br tag
          e.preventDefault();
       };
 
-      // We make a setTImeout because
-      // input.innerHTML is not yet updated with e.char
-      // and waiting for onkeypress is too slow
+      // The timeout allows us to acces the
+      // updated contents of input.innerHTML
+      // without needing to wait til input.onkeyup
       return setTimeout(function(){
-
-         sync(output, input);
+         setHTMLof(output).to(input);
          setFocus(input);
          return moveViewportToBottom();
-
       }, 0);
 
    }
