@@ -13,10 +13,8 @@ var typewriter = function () {
       };
 
       // CMD on Mac or CNTRL on Windows
-      if (e.metaKey) { 
-         if (keyCode === 82 && !inDesktop()) {
-            return // allow reload (CMD + r) to function normally in a browser
-         } 
+      if (e.metaKey && !inDesktop()) { 
+         if (keyCode === 82) {return} // allow reload (CMD + r) to function normally in a browser
          return e.preventDefault();
       }
       
@@ -191,7 +189,10 @@ var typewriter = function () {
 
    // This starts the typewriter
    return function init () {
+      
       if (inDesktop()) {
+         var desktop = require('./app.js');
+         desktop.app();
          console.log('Running in desktop environment!')
       } 
 
