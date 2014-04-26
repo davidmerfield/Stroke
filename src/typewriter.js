@@ -62,19 +62,19 @@ var typewriter = function () {
       if (e.metaKey && keyCode !== 82) {
          e.preventDefault()
       }
+      
+      // Arrow keys
+      if (isArrowKey(keyCode)) {
 
-      // Handle arrow keys
-      if (keyCode <= 40 && keyCode >= 37) {
-         
-         // If shift is held allow user to make selection in output
-         if (e.shiftKey) {
+         // User is trying to make a selection using the shift key
+         if (e.shiftKey && keyCode !== 39) { // right key
+
+            // so allow this to happen in #output
             return setFocus(output);
+         };
 
-         // Otherwise disable the arrow keys
-         } else {
-            e.preventDefault();            
-         }
-
+         // Otherwise just disable them
+         return e.preventDefault();
       };
 
       // Handle return key
