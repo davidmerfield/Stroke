@@ -14,6 +14,9 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
   box-sizing: border-box; 
 }
 
+::selection {background: rgba(255,0,0,0.15)}
+::-moz-selection {background: rgba(255,0,0,0.15)}
+
 body {
   font: 400 1em / 1.5em 'Droid Sans Mono', monospace;
   color: #191919;
@@ -39,11 +42,6 @@ body {
   overflow: hidden;
 }
 
-#output:focus {
-  border: none;
-  outline: none;
-}
-
 /* Renders the text the user has typed */
 #output {
   margin: 0 auto;
@@ -51,15 +49,20 @@ body {
   max-width: 50em;
 }
 
+#output:focus {
+  border: none;
+  outline: none;
+}
+
 /* Custom caret */
-#output:after {
-  content: "\00a0";
-  width: 0.25em;
+#output p:last-child:after {
+  content: "\2007";
   background: #ffc820;
+  width: 0.25em;
+  position: relative;
+  left: -1px;
   display: inline-block;
-  -moz-animation: blink 0.5s ease-in-out 0.3s infinite alternate;
-  -webkit-animation: blink 0.5s ease-in-out 0.3s infinite alternate;
-  animation: blink 0.5s ease-in-out 0.3s infinite alternate;
+  -webkit-animation: blink 0.5s ease-in-out 0.25s infinite alternate;
 }
 
 /* Caret animation */
@@ -67,11 +70,6 @@ body {
   0% {opacity:1}
   100% {opacity:0}
 }
-
-/* Selected text background color
-::selection {background: rgba(255,0,0,0.15)}
-::-moz-selection {background: rgba(255,0,0,0.15)}
-*/
 
 /* Custom styling 'deleted' text */
 .strike::after {
