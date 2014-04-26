@@ -53,9 +53,9 @@ var typewriter = function () {
       
       var keyCode = e.which;
 
-      // Disable delete key
+      // Delete key
       if (keyCode === 8) {
-         e.preventDefault()
+         return e.preventDefault();
       };
 
       // Disable copy paste and shit
