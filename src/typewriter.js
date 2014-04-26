@@ -51,19 +51,34 @@ var typewriter = function () {
 
    }
 
-   document.onmouseup = function (e) {
+   output.onkeydown = function (e) {      
       
-      // We need to keep focus on input unless there's selected text
-      if (!selectedText()) {
-         setFocus(input);
+      var keyCode = e.which;
+
+      // Delete
+      if (e.which === 8) {
+         strikeOut(selectedText());
+         setHTMLof(input).to(output);
+         e.preventDefault();
+         return setFocus(input);                  
       }
 
-      // Since theres selected text,
-      // perhaps prepare for strikeout?
+      // Allow normal operation if shift or shift + arrowkey is pressed... 
+      if (e.shiftKey) {
+         if (isArrowKey(keyCode)) {return}
+         return
+      }
 
+      // But disable everything else
+      e.preventDefault();
+      return setFocus(input);         
    }
 
-   
+   // Keep focus on input unless the user has selected text
+   output.onkeyup = document.onmouseup = function (e) {
+      if (!selectedText()) {return setFocus(input)}
+   };
+
    function buildGUIMenu () {
       return
    }
@@ -72,10 +87,6 @@ var typewriter = function () {
    function selectedText() {
       var selection = window.getSelection();
       return selection.type === 'Range' ? selection : false
-   }
-
-   function sync (oldNode, newNode) {
-      return oldNode.innerHTML = newNode.innerHTML
    }
 
    function inDesktop () {
@@ -87,32 +98,76 @@ var typewriter = function () {
    }
 
    function moveViewportToBottom () {
-      window.scrollTo(0, document.body.offsetHeight);
+      return window.scrollTo(0, document.body.offsetHeight);
    }   
 
-   function strikeOut() {
+   function extractTextNodes(range) {
+      var subRanges = [],
+          container = range.commonAncestorContainer;
 
-      var selectedText = window.getSelection().getRangeAt();
+      var treeWalker = document.createTreeWalker(
+         container,
+         NodeFilter.SHOW_TEXT,
+         function(node) {
+            if (node.isSameNode(container)) {return NodeFilter.FILTER_REJECT}
+            if (range.intersectsNode(node)) {return NodeFilter.FILTER_ACCEPT}
+            return NodeFilter.FILTER_REJECT
+         },
+         false
+      );
+            
+      while (treeWalker.nextNode()) {
 
-      console.log(window.getSelection());
-      console.log(window.getSelection().getRangeAt());
+         var textNode = treeWalker.currentNode,
+             subRange = document.createRange();
+             subRange.selectNode(textNode);
 
-      // The black line through the text
-      var strike = document.createElement('span');
-          strike.className = 'strike';
+         if (textNode.isSameNode(range.startContainer)) {
+            subRange.setStart(textNode, range.startOffset);
+         }
 
-      selectedText.surroundContents(strike);
+         else if (textNode.isSameNode(range.endContainer)) {
+            subRange.setEnd(textNode, range.endOffset);
+         } 
 
-      // The 'empty' span is to counter
-      // weird behaviour when setting focus of contenteditable
-      // Without it, you can keep typing within strike out text
-      var emptySpan = document.createElement('span');
-          emptySpan.innerHTML = '&#8203;'; // zero width character
+         subRanges.push(subRange);
 
-      // Adds empty span after strike
-      selectedText.collapse(false);
-      selectedText.insertNode(emptySpan);
+      };
 
+      return subRanges;
+   }
+
+   function rangeHasNonTextNodes (range) {
+      return range.commonAncestorContainer.nodeName !== '#text'
+   }
+
+   function strikeOut(selectedText) {
+
+      var range = selectedText.getRangeAt();
+
+      if (rangeHasNonTextNodes(range)) {
+         
+         var textNodeRanges = extractTextNodes(range);
+         for (var i in textNodeRanges) {strike(textNodeRanges[i])}
+         
+      } else {
+         strike(range)
+      }
+
+      function strike (range) {
+         var strike = document.createElement('span');
+             strike.className = 'strike';
+
+         range.surroundContents(strike);
+
+         // The 'empty' span is to stop the user typing within strike out text
+         var emptySpan = document.createElement('span');
+             emptySpan.innerHTML = '&#8203;'; // zero width character
+
+         // Adds empty span after strike
+         range.collapse(false);
+         range.insertNode(emptySpan);         
+      }
    }
 
    function setHTMLof (oldNode) {
