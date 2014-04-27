@@ -25,11 +25,11 @@ body {
 
 /* All the elements will scale because their dimensions are declared in ems */
 @media all and (max-width: 960px) and (min-width: 600px) {
-  body {font-size: 0.88em}  
+  body {font-size: 1em}  
 }
 
 @media all and (max-width: 2000px) and (min-width: 960px) {
-  body {font-size: 1.11em}  
+  body {font-size: 1.1em}  
 }
 
 /* Holds the text the user types */
