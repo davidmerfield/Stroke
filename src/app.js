@@ -112,30 +112,43 @@ var app = function () {
       return str
    }
 
-            console.log(this);
-              
-             //  var path = this.value,
-             //    output = window.document.getElementById('output'),
-             //        data = output.textContent;
+   function saveFile () {
 
-             // window.alert(path);
+      var data = getText();
 
-             //  fs.writeFile(path, data, function(err) {
-             //                          if (err) throw err;
-             //                          console.log('writeFile succeeded.');
-             //    });
+      if (!filePath) {
+         chooseFile('#saveDialog');
+      } else {
+         fs.writeFile(filePath, data, function(err) {
+           if (err) throw err;
 
-            }, false);
+           console.log('writeFile succeeded.');
+         });         
+      }
 
-            chooser.click();  
-          }
-          chooseFile('#saveDialog');
+     function chooseFile(name) {
+         var chooser = document.querySelector(name);
+         chooser.addEventListener("change", function(evt) {
+           
+           var path = this.value;
 
-    }
-    
-    function printFile() {
+            fs.writeFile(path, data, function(err) {
+              if (err) throw err;
+              filePath = path;
+              fileName = filePath.replace(/^.*[\\\/]/, '');
+              win = gui.Window.get();
+              win.title = fileName;
 
-    }
+              console.log('writeFile succeeded.');
+            });
+
+         }, false);
+
+         chooser.click();  
+       }
+       
+
+   }
 
     function openFile () {
 
