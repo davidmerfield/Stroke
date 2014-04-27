@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "main": "index.html",
   "window": {
-      "title": "New document",
-      "toolbar": true,
+      "title": "Untitled",
+      "toolbar": false,
       "frame": true,
-      "width": 640,
-      "height": 800,
+      "width": 712,
+      "height": 820,
       "position": "mouse",
       "min_width": 300,
       "min_height": 200
