@@ -183,25 +183,29 @@ var typewriter = function () {
           selection.addRange(range);
    }
 
-   // This starts the typewriter
-   return function init () {
-      
-      if (inDesktop()) {
-         var desktop = require('./app.js');
-         desktop.app();
-         console.log('Running in desktop environment!')
-      } 
+   return {
 
-      // If we're starting a new document add the first p tag
-      if (input.innerHTML === '') {
-         input.innerHTML += '<p>&#xfeff;</p>'
-      }
+      init: function () {
+         
+         if (inDesktop()) {
+            app();
+            console.log('Running in desktop environment!')
+         } 
 
-      setHTMLof(output).to(input);
-      setFocus(input);
-   }();
+         // If we're starting a new document add the first p tag
+         if (input.innerHTML === '') {
+            input.innerHTML += '<p>&#xfeff;</p>'
+         }
 
-}
+         setHTMLof(output).to(input);
+         setFocus(input);
+      },
 
-// GO GO GADGET
-typewriter();
+      setHTMLof: setHTMLof,
+      setFocus: setFocus,
+      strikeOut: strikeOut
+
+   };
+
+
+};
