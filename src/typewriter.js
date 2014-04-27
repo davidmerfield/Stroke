@@ -3,6 +3,7 @@ var typewriter = function () {
    var input = document.getElementById('input'), // captures the user's text input
        output = document.getElementById('output'); // renders the user's text input
 
+   // Keydown fires first
    input.onkeydown = function (e) {      
       
       var keyCode = e.which;
@@ -21,11 +22,9 @@ var typewriter = function () {
       // Arrow keys
       if (isArrowKey(keyCode)) {
 
-         // User is trying to make a selection using the shift key
-         if (e.shiftKey && keyCode !== 39) { // right key
-
-            // so allow this to happen in #output
-            return setFocus(output);
+         // If holding shift and not right arrow then 
+         if (e.shiftKey && keyCode !== 39) {
+            return setFocus(output); // move to output to allow selection
          };
 
          // Otherwise just disable them
@@ -37,6 +36,12 @@ var typewriter = function () {
          input.innerHTML += '<p>&#xfeff;</p>'; // zero width char allows us to setfocus() after the br tag
          e.preventDefault();
       };
+
+      // Handle tab key
+      if(keyCode === 9) {
+         input.lastChild.innerHTML += '&nbsp;&nbsp;';
+         e.preventDefault();
+      }
 
       // The timeout allows us to acces the
       // updated contents of input.innerHTML
@@ -53,17 +58,18 @@ var typewriter = function () {
       
       var keyCode = e.which;
 
-      // Delete
+      // Modify delete  
       if (e.which === 8) {
+         e.preventDefault();
          strikeOut(selectedText());
          setHTMLof(input).to(output);
-         e.preventDefault();
          return setFocus(input);                  
       }
 
-      // Allow normal operation if shift or shift + arrowkey is pressed... 
+      // Shift is pressed
       if (e.shiftKey) {
-         if (isArrowKey(keyCode)) {return}
+         // allow default event since
+         // shift is used to modify selection
          return
       }
 
@@ -84,28 +90,27 @@ var typewriter = function () {
    }
 
    function inDesktop () {
-      return typeof require !== 'undefined' ? true : false
+      return typeof require !== 'undefined'
    }
 
    function isArrowKey (keyCode) {
-      return (keyCode <= 40 && keyCode >= 37) ? true : false
+      return (keyCode <= 40 && keyCode >= 37)
    }
 
+   // Ensures caret is always in view
    function moveViewportToBottom () {
       return window.scrollTo(0, document.body.offsetHeight);
    }   
 
+   // Used to strike out text across non text nodes
    function extractTextNodes(range) {
       var subRanges = [],
           container = range.commonAncestorContainer;
 
-      var treeWalker = document.createTreeWalker(
-         container,
-         NodeFilter.SHOW_TEXT,
+      var treeWalker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT,
          function(node) {
-            if (node.isSameNode(container)) {return NodeFilter.FILTER_REJECT}
-            if (range.intersectsNode(node)) {return NodeFilter.FILTER_ACCEPT}
-            return NodeFilter.FILTER_REJECT
+            if (node.isSameNode(container) || !range.intersectsNode(node)) {return NodeFilter.FILTER_REJECT}
+            return NodeFilter.FILTER_ACCEPT
          },
          false
       );
@@ -131,10 +136,12 @@ var typewriter = function () {
       return subRanges;
    }
 
+   // Used to check text selection range before striking out selection
    function rangeHasNonTextNodes (range) {
       return range.commonAncestorContainer.nodeName !== '#text'
    }
 
+   // Makes a line through text
    function strikeOut(selectedText) {
 
       var range = selectedText.getRangeAt();
@@ -142,13 +149,13 @@ var typewriter = function () {
       if (rangeHasNonTextNodes(range)) {
          
          var textNodeRanges = extractTextNodes(range);
-         for (var i in textNodeRanges) {strike(textNodeRanges[i])}
+         for (var i in textNodeRanges) {surround(textNodeRanges[i])}
          
       } else {
-         strike(range)
+         surround(range)
       }
 
-      function strike (range) {
+      function surround (range) {
          var strike = document.createElement('span');
              strike.className = 'strike';
 
@@ -164,6 +171,7 @@ var typewriter = function () {
       }
    }
 
+   // Used to synchronize the contents of two nodes
    function setHTMLof (oldNode) {
       return {
          to: function(newNode) {
@@ -173,14 +181,17 @@ var typewriter = function () {
    };
 
    function setFocus (el) {
-
+      
+      // .focus() puts caret at start of el
+      // Works by creating a user selection then collapses it
+   
       var range = document.createRange();
           range.selectNodeContents(el);
-          range.collapse(false);
+          range.collapse(false); // false to collapse at end of range
       
       var selection = window.getSelection();
-          selection.removeAllRanges();
-          selection.addRange(range);
+          selection.removeAllRanges(); // clear existing user selection
+          selection.addRange(range); 
    }
 
    return {
@@ -188,11 +199,12 @@ var typewriter = function () {
       init: function () {
          
          if (inDesktop()) {
-            app();
+            app(); // start the app functionality
             console.log('Running in desktop environment!')
          } 
 
          // If we're starting a new document add the first p tag
+         // to recieve the user's typing input
          if (input.innerHTML === '') {
             input.innerHTML += '<p>&#xfeff;</p>'
          }
