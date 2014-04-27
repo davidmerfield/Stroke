@@ -77,10 +77,6 @@ var typewriter = function () {
       if (!selectedText()) {return setFocus(input)}
    };
 
-   function buildGUIMenu () {
-      return
-   }
-
    // Used to check if the user has selected text
    function selectedText() {
       var selection = window.getSelection();
