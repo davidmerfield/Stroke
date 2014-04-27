@@ -1,0 +1,49 @@
+﻿This is cool.
+﻿
+﻿BUt fuck man, how do I get this​ working..
+﻿
+﻿TO DO:
+﻿
+﻿De couple save​ process from the structure of​ content if possible.
+﻿
+﻿APp icon.
+﻿
+﻿New window position working...
+﻿
+﻿Open​ in new window...
+﻿
+﻿File menu and keyboard shortcuts fully work.
+﻿
+﻿Remove edit menu
+﻿
+﻿Make print work
+﻿
+﻿Intercept close event​ if file is unsaved.
+﻿
+﻿Autosave each​​
+﻿
+﻿See if you can add help file.
+﻿
+﻿Full screen mode is dope...
+﻿
+﻿Save window positions on​ quit.
+﻿
+﻿Dont close​ app on quit.
+﻿
+﻿Cache font locally.
+﻿
+﻿Make escape close fullscreen window.
+﻿
+﻿Auto suggest file name from first line.
+﻿
+﻿Fix open file​ position
+﻿
+﻿Pass options to new​​
+﻿
+﻿TEXT to​ HTML parser fucks up selection.
+﻿
+﻿Modify colors to make them less harsh.
+﻿
+﻿Fix cursor blinking in demo.
+﻿
+﻿Add natural​ pauses to demo.
