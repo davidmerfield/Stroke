@@ -42,9 +42,9 @@ h2, h3, a {
 h1 {
    font-weight: bold;
    color: rgba(0,0,0,0.85);
-   font-size: 2.2em;
+   font-size: 2em;
    line-height: 1.5em;
-   letter-spacing: 0.18em;
+   letter-spacing: 0.15em;
    text-transform: uppercase;
 }
 
@@ -96,13 +96,13 @@ h3 {font-size: 0.77em;margin: 0}
    top: 0;
    width: 116px;
    height: 100%;
-   background: url('demo_bg_before.png') repeat-x 0 0;
+   background: url('./img/demo_bg_before.png') repeat-x 0 0;
    background-size: 116px;
 }
 #demo:after {
    right: -116px;
    left: auto;
-   background-image: url('demo_bg_after.png')
+   background-image: url('./img/demo_bg_after.png')
 }
 #demo {
    position: absolute;
@@ -111,7 +111,7 @@ h3 {font-size: 0.77em;margin: 0}
    left: 50%;
    width: 46%;
    margin-left: -23%;
-   background: url('demo_bg.png') repeat-x 0 0;
+   background: url('./img/demo_bg.png') repeat-x 0 0;
    background-size: 6px;
    border-bottom: none;
 }
