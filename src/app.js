@@ -139,15 +139,32 @@ var app = function () {
 
     function openFile () {
 
+        chooseFile('#openDialog');
+
         function chooseFile(name) {
             var chooser = document.querySelector(name);
             chooser.addEventListener("change", function(evt) {
-              console.log(this.value);
+
+
+              var path = this.value;
+
+              fs.readFile(path, 'utf8', function(err, data) {
+
+               if (err) throw err;
+               filePath = path;
+               fileName = filePath.replace(/^.*[\\\/]/, '');
+               win = gui.Window.get();
+               win.title = fileName;
+
+               input.innerHTML = getHTML(data);
+               output.innerHTML  = getHTML(data);
+
+              });
+
             }, false);
 
             chooser.click();  
           }
-          chooseFile('#fileDialog');
 
 
     }
@@ -160,5 +177,3 @@ var app = function () {
     }();
 
 }
-
-exports.app = app
