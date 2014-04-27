@@ -2,12 +2,14 @@
 <html>
    <head>
       <link rel="stylesheet" href="style.css">
+      <script src="./app.js"></script>
+      <script src="./typewriter.js"></script>
    </head>
    <body>
-      <input type="file" id="saveDialog" nwsaveas="File.txt" style="display:none" />  
-      <input type="file" id="openDialog" style="display:none" />  
+      <input type="file" id="saveDialog" nwsaveas="~/Untitled.txt" style="display:none" accept=".txt" />  
+      <input type="file" id="openDialog" style="display:none" accept=".txt"/>  
       <section id="input" contenteditable="true"></section>  
       <section id="output" contenteditable="true" spellcheck="false"></section>
-      <script src="./typewriter.js"></script>
+      <script>typewriter().init()</script>
    </body>
 </html>
