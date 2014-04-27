@@ -1,6 +1,9 @@
 var app = function () {
 
-    var gui = global.window.nwDispatcher.requireNwGui(),
+   var input = document.getElementById('input'), // captures the user's text input
+       output = document.getElementById('output'); // renders the user's text input
+
+    var gui = require('nw.gui'),
         fs = require('fs'),
         windowPrefs = {
             title: "New document",
@@ -13,8 +16,10 @@ var app = function () {
             toolbar: false
         };
 
+   var fileName= undefined;
+       filePath = undefined;
 
-    window.document.onkeydown = function (e) {
+    document.onkeydown = function (e) {
         
         var keyCode = e.which;
 
@@ -82,11 +87,30 @@ var app = function () {
         var newWindow = gui.Window.open('index.html', windowPrefs);
     }
 
-    function saveFile () {
+    function strip(html)
+    {
+       var tmp = window.document.createElement("DIV");
+       tmp.innerHTML = html;
+       return tmp.textContent || tmp.innerText || "";
+    }
 
-        function chooseFile(name) {
-            var chooser = window.document.querySelector(name);
-            chooser.addEventListener("change", function(evt) {
+   function getHTML (str) {
+      str = '<p>' + str;
+      str = str.replace(/[\n]/gi, "</p>");
+      return str
+   }
+
+   function getText () {
+      var str = output.innerHTML;
+      str = str.replace(/<p>/gi, "");
+      str = str.replace(/<\/p>/gi, "\n");
+      str = str.replace(/&nbsp;/gi, "");
+      str = str.replace(/\s<span class="strike">[^>]*<\/span>/g, '');
+      str = str.replace(/<span class="strike">[^>]*<\/span>/g, '');
+      str = str.replace(/<span>/gi, "");
+      str = str.replace(/<\/span>/gi, "");
+      return str
+   }
 
             console.log(this);
               
