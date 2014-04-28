@@ -2,10 +2,12 @@
   "name": "Typewriter",
   "version": "0.0.0",
   "main": "index.html",
+  "no-edit-menu": true,
   "window": {
       "title": "Untitled",
       "toolbar": false,
       "frame": true,
+      "show": false,
       "width": 712,
       "height": 820,
       "position": "mouse",
