@@ -23,8 +23,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
 
 body {
   font: 400 1em / 1.5em 'Droid Sans Mono', monospace;
-  color: #232323;
-  background-color: #f7f6f2;
+  color: #212121;
   text-rendering: optimizeLegibility;
 }
 
