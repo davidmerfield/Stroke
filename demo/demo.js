@@ -90,19 +90,19 @@ var demo = function () {
 
       newLine(function(){
       
-      type(' Every letter you type is permanent. No editing. No formatting. A bit like a real typewriter.', function(){
+      type('Every letter you type is permanent. A bit like a real typewriter.', function(){
 
       newLine(function(){
       
-      type('Deleting text just strikes it out, so you can cover up mistskes', function(){
+      type('You can\'t delete your mistakes but you can coevr', function(){
 
-      crossOut(9, function(){
+      crossOut(6, function(){
             
-      type(' mistakes.', function(){    
+      type(' cover them up.', function(){    
 
       newLine(function(){
       
-      type('Typewrite is perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
+      type('Typewriter is perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
       
       typewriter().setHTMLof(input).to(output)
             
