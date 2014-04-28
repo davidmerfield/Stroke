@@ -1,4 +1,8 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+@font-face {
+  font-family: 'Droid Sans Mono';
+  src: url('./DroidSansMono.ttf');
+  font-weight: 400;
+}
 
 /* Reset */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
@@ -19,7 +23,8 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
 
 body {
   font: 400 1em / 1.5em 'Droid Sans Mono', monospace;
-  color: #191919;
+  color: #232323;
+  background-color: #f7f6f2;
   text-rendering: optimizeLegibility;
 }
 
@@ -63,6 +68,24 @@ body {
   left: -1px;
   display: inline-block;
   -webkit-animation: blink 0.5s ease-in-out 0.25s infinite alternate;
+}
+
+/* Fringe to make scrolling less hidden */
+#output:after {
+  width: 100%;
+  height: 2em;
+  content: " ";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: -moz-linear-gradient(top, rgba(247,246,242,1) 0%, rgba(247,246,242,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(247,246,242,1)), color-stop(100%,rgba(247,246,242,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(247,246,242,1) 0%,rgba(247,246,242,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(247,246,242,1) 0%,rgba(247,246,242,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(247,246,242,1) 0%,rgba(247,246,242,0) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(247,246,242,1) 0%,rgba(247,246,242,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
 /* Caret animation */
