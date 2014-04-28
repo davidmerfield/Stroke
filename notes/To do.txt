@@ -2,7 +2,6 @@
 
 Work out how to sign app for distribution
 Check for external modifications to file on focus
-Dont close​ app on close of last window.
 ﻿﻿Make escape close fullscreen window.
 
 ## Open
