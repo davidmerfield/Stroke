@@ -151,8 +151,9 @@ var app = function () {
 
      if (err) throw err;
 
-     input.innerHTML = htmlToText(data);
-     output.innerHTML  = htmlToText(data);
+     input.innerHTML = textToHTML(data);
+     typewriter().setHTMLof(output).to(input);
+     typewriter().setFocus(input);
 
     });
 
@@ -264,7 +265,11 @@ var app = function () {
 
   function textToHTML (text) {
     text = '<p>' + text;
-    text = text.replace(/[\n]/gi, "</p>");
+    text = text.replace(/[\n]/gi, "</p><p>");
+    text = text + '&#xfeff;</p>';
+    if (text.substring(text.length - 15) === '<p>&#xfeff;</p>') {
+      text = text.substring(0, text.length - 15);
+    }
     return text
   }
 
@@ -292,6 +297,7 @@ var app = function () {
       var params = getParams();
 
       if (params.firstWindow) {
+        buildMenu();
         global.typewriterWindows = [currentWindow];
         setQuitState(false)
       } else {

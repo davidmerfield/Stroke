@@ -3,12 +3,6 @@
 App icon
 Work out how to sign app for distribution
 
-## Open
-- TEXT to​ HTML parser sucks
-
-## Save
-- HTML to Text parser sucks
-
 ## Demo 
 Fix cursor blinking in demo.
 ﻿Add natural​ pauses to demo.
