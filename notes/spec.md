@@ -10,6 +10,11 @@ roughblot
 straightwriter
 blotter -
 forward -
+joyce
+ernest
+beckett
+drafter
+drafty
 onwriter -
 onwards -
 simwriter
@@ -24,7 +29,7 @@ typewrite - YES YES YES
 hammer - 
 beatwriter
 anvil
-immovable
+immovable type
 firm
 fixwriter
 stillwriter
@@ -45,8 +50,6 @@ this is not a tool for editing
 this is not a tool for formatting
 this is not a tool for people who care about word counts
 this is a tool for extracting your thoughts and slamming them onto the page, 
-
-If hemingway made software, he would use this.
 
 No sounds. No options. No toggles.
 
@@ -73,26 +76,30 @@ inconsolata maybe
 
 if you stop typing, perhaps increase the pulse of the caret?
 
-Allow you to save version with and without strikethroughs
-Allow you to print version with and without strikethroughs
+by default strikethroughs are removed from saved version
 
 Rich text makes most sense so strikethroughs can be included
 
-Be able to move selection caret with keys (would look like text selection). Pressing another character except delete would continue typing as normal. 
+If you save at rtf then you preserve strikethroughs
 
-Is it ok to have two 'carets'? That's weird? It would be nice to not have to use the mouse.
+Be able to move selection caret with keys (would look like text selection). Pressing another character except delete would continue typing as normal. 
 
 Will need an RTF to HTML parser, html to RTF parser. Can I encode this shit as a text file?
 
+Does the txt format allow for hidden text? Or some markup?
+
 **The goal would be to be able to open the text file in another program and not see the strikethroughs.**
 
-Does the txt format allow for hidden text? Or some markup?
+Would be awesome to include strikethroughs in our program, but same text file doesn't show them when opened in another.
+
+select all text,
+copy selected text
 
 # Issues
 
 **File**
 - New
-- Open (accepts txt, rtf, md)
+- Open (accepts text file)
 - Save (as rtf)
 
 - Export (option to remove strikethrough)
@@ -103,4 +110,4 @@ Does the txt format allow for hidden text? Or some markup?
 
 **View**
 - Full screen
-- Night mode
+- Night mode?
