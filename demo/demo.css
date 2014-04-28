@@ -31,7 +31,7 @@ body {
    color: rgba(0,0,0,0.35);
    text-decoration: none;
 } #about a em {
-   font-weight: bold;
+   font-weight: normal;
    font-style: normal;
    border-bottom: 2px solid rgba(0,0,0,0.1)
 }
