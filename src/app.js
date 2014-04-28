@@ -30,6 +30,12 @@ var app = function () {
       
       var keyCode = e.which;
 
+      // CMD + P 
+
+      if (keyCode == 80 && e.metaKey) {
+        window.print();
+      };
+
       // CMD + N
       if (keyCode === 78 && e.metaKey) {
           newFile();
@@ -42,8 +48,20 @@ var app = function () {
 
       // CMD + O
       if (keyCode === 79 && e.metaKey) {
-          openFile();
+        openFile();
       };
+
+      if (keyCode === 81 && e.metaKey) {
+        e.preventDefault();
+        setQuitState(true);
+        closeFile();
+      }
+  };
+
+  document.onkeyup = function (e) {
+    if (document.filePath) {
+      saveFile()
+    }
   };
 
   function newFile (openFile) {
@@ -63,26 +81,42 @@ var app = function () {
      newFile(true);
   }
 
-  function closeFile () {
-    if (document.filePath !== undefined || output.innerHTML === '') {
-      return this.close(true);  
-    }
-    
-    var reallyClose = window.confirm("You have not yet saved your work. Do you still want to close this document?");
-    
-    if (reallyClose) {
-      currentWindow.close(true);          
-    } else {
-      saveFile();
-    };
+  function removeWindow (currentWindow) {
+    for (var i in global.typewriterWindows) {
 
+      var openWindow = global.typewriterWindows[i];
+
+      if (openWindow === currentWindow) {
+        global.typewriterWindows.splice(i, 1);
+        return 
+      };
+    }
   }
 
-  function saveFile (callback) {
+  function closeFile () {
+
+    if (document.filePath === undefined && output.textContent.trim() !== '') {
+
+      var reallyClose = window.confirm("You have not yet saved your work. Do you still want to close this document?");
+      
+      if (!reallyClose) {
+        setQuitState(false);
+        return saveFile(true);               
+      }
+
+    } 
+
+    removeWindow(currentWindow);
+    return currentWindow.close(true);   
+      
+  
+  }
+
+  function saveFile (thenClose) {
 
     var text = htmlToText(output.innerHTML);
 
-    if (document.filePath) {
+    if (document.filePath !== undefined) {
       return fs.writeFile(document.filePath, text, function(err) {
         if (err) throw err;
       })
@@ -91,14 +125,37 @@ var app = function () {
     filePicker('saveDialog', function(value){
       
       document.filePath = value;
-      document.fileName = filePath.replace(/^.*[\\\/]/, '');
+      document.fileName = document.filePath.replace(/^.*[\\\/]/, '');
 
       fs.writeFile(document.filePath, text, function(err) {
         if (err) throw err;
+        if (thenClose) {
+          setQuitState(true);
+          currentWindow.close(true);
+        }
         currentWindow.title = document.fileName;
       });
 
     });     
+  }
+
+  function updateFile (filePath) {
+    
+    if (!filePath && document.filePath !== undefined) {
+      var filePath = document.filePath
+    } else {
+      return
+    }
+
+    fs.readFile(filePath, 'utf8', function(err, data) {
+
+     if (err) throw err;
+
+     input.innerHTML = htmlToText(data);
+     output.innerHTML  = htmlToText(data);
+
+    });
+
   }
 
   function readFile () {
@@ -114,15 +171,10 @@ var app = function () {
         return currentWindow.close(true);
       };
 
-      fs.readFile(document.filePath, 'utf8', function(err, data) {
+      currentWindow.title = document.fileName;
 
-       if (err) throw err;
-       currentWindow.title = document.fileName;
+      updateFile(document.filePath);
 
-       input.innerHTML = htmlToText(data);
-       output.innerHTML  = htmlToText(data);
-
-      });
     })
 
   }
@@ -227,13 +279,21 @@ var app = function () {
     return html
   }
 
+  function setQuitState (state) {
+    global.typewriterQuit = state;
+  }
+
+  function getQuitState () {
+    return global.typewriterQuit
+  }
+
   return function init () {
 
       var params = getParams();
 
       if (params.firstWindow) {
-        alert('first window');
         global.typewriterWindows = [currentWindow];
+        setQuitState(false)
       } else {
         global.typewriterWindows.push(currentWindow)
       }
@@ -251,6 +311,15 @@ var app = function () {
       };
 
       currentWindow.on('close', closeFile);
-  
+      
+      currentWindow.on('focus', function(){
+      
+        if (getQuitState()) {
+          currentWindow.close();
+        } else {
+          updateFile();          
+        }
+      });
+
     }();
 }
