@@ -1,28 +1,13 @@
 # TO DO:
 
+App icon
 Work out how to sign app for distribution
-Check for external modifications to file on focus
-﻿﻿Make escape close fullscreen window.
 
 ## Open
-TEXT to​ HTML parser sucks
+- TEXT to​ HTML parser sucks
 
 ## Save
-- ﻿Decouple save​ process from the structure of​ content if possible.
-- Autosave each​​ keystroke
 - HTML to Text parser sucks
-
-## Print
-- Make print work
-
-# Close
-- Allow empty documents to close with no prompt
-
-## App icon
-﻿Wonky page
-Square with caret inside
-abstract typewriter
-page with big caret
 
 ## Demo 
 Fix cursor blinking in demo.

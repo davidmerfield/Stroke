@@ -62,6 +62,14 @@ Always onwards, always forwards.
 one press of the key, one character
 (you can't hold down key and produce lines of characters)
 
+
+# App icon ideas
+
+- Wonky page
+- Square with caret inside
+- abstract typewriter
+page with big caret
+
 # homepage
 
 homepage of a beam of light falling on white window (matches os) with text being typed and text particles flying.
