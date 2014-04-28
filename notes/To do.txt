@@ -17,7 +17,6 @@ TEXT to​ HTML parser sucks
 
 # Close
 - Allow empty documents to close with no prompt
-- Save app state (window positions) on​ quit, no need to prompt
 
 ## App icon
 ﻿Wonky page
@@ -32,9 +31,9 @@ Fix cursor blinking in demo.
 text gets cut off in console
 
 ## Nice to haves
+- Save app state (window positions) on​ quit, no need to prompt
 ﻿Consider frameless window
 Add help file.
-- Set focus if user tries to open already open file
 - Auto suggest file name from first line.
 - Work out how to communicate autosave to user.
 Tweak demo copy
