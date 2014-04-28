@@ -1,49 +1,41 @@
-﻿This is cool.
-﻿
-﻿BUt fuck man, how do I get this​ working..
-﻿
-﻿TO DO:
-﻿
-﻿De couple save​ process from the structure of​ content if possible.
-﻿
-﻿APp icon.
-﻿
-﻿New window position working...
-﻿
-﻿Open​ in new window...
-﻿
-﻿File menu and keyboard shortcuts fully work.
-﻿
-﻿Remove edit menu
-﻿
-﻿Make print work
-﻿
-﻿Intercept close event​ if file is unsaved.
-﻿
-﻿Autosave each​​
-﻿
-﻿See if you can add help file.
-﻿
-﻿Full screen mode is dope...
-﻿
-﻿Save window positions on​ quit.
-﻿
-﻿Dont close​ app on quit.
-﻿
-﻿Cache font locally.
-﻿
-﻿Make escape close fullscreen window.
-﻿
-﻿Auto suggest file name from first line.
-﻿
-﻿Fix open file​ position
-﻿
-﻿Pass options to new​​
-﻿
-﻿TEXT to​ HTML parser fucks up selection.
-﻿
-﻿Modify colors to make them less harsh.
-﻿
-﻿Fix cursor blinking in demo.
-﻿
+# TO DO:
+
+Work out how to sign app for distribution
+Check for external modifications to file on focus
+Dont close​ app on close of last window.
+﻿﻿Make escape close fullscreen window.
+
+## Open
+TEXT to​ HTML parser sucks
+
+## Save
+- ﻿Decouple save​ process from the structure of​ content if possible.
+- Autosave each​​ keystroke
+- HTML to Text parser sucks
+
+## Print
+- Make print work
+
+# Close
+- Allow empty documents to close with no prompt
+- Save app state (window positions) on​ quit, no need to prompt
+
+## App icon
+﻿Wonky page
+Square with caret inside
+abstract typewriter
+page with big caret
+
+## Demo 
+Fix cursor blinking in demo.
 ﻿Add natural​ pauses to demo.
+﻿Generate​ multiple screen renders for demo.
+text gets cut off in console
+
+## Nice to haves
+﻿Consider frameless window
+Add help file.
+- Set focus if user tries to open already open file
+- Auto suggest file name from first line.
+- Work out how to communicate autosave to user.
+Tweak demo copy
