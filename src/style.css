@@ -87,6 +87,10 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
+#output.blurred p:last-child:after {
+  display: none;
+}
+
 /* Caret animation */
 @-webkit-keyframes blink {
   0% {opacity:1}

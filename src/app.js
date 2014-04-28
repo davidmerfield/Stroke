@@ -317,8 +317,14 @@ var app = function () {
       };
 
       currentWindow.on('close', closeFile);
+
+      currentWindow.on('blur', function(){
+        output.setAttribute('class', 'blurred')
+      });
       
       currentWindow.on('focus', function(){
+
+        output.setAttribute('class', '')
       
         if (getQuitState()) {
           currentWindow.close();
