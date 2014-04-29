@@ -31,9 +31,8 @@ var app = function () {
       var keyCode = e.which;
 
       // CMD + P 
-
       if (keyCode == 80 && e.metaKey) {
-        window.print();
+        printFile();
       };
 
       // CMD + N
@@ -159,6 +158,10 @@ var app = function () {
 
   }
 
+  function printFile () {
+    window.print();
+  }
+
   function readFile () {
 
     filePicker('openDialog', function(value){
@@ -236,7 +239,7 @@ var app = function () {
      file.append(new gui.MenuItem({ type: 'separator' }));
 
      file.append(new gui.MenuItem({
-         label: 'Print',
+         label: 'Print             ⌘P',
          click: function() {
            return printFile()
          }
