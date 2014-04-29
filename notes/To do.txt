@@ -1,12 +1,16 @@
 # TO DO:
 
-Deploy website
+Deploy (proper) website
 
-## Future features
-- Cross platform builds
+## Future To Do
+
+- Test and release linux and windows builds
 	- Generate​ multiple screen renders for demo.
+	- Test UA and serve relevant demo content
+
 - Save app state (window positions) on​ quit, no need to prompt
-- Consider frameless window
 - Auto suggest file name from first line.
-- Add help file.
 - Work out how to communicate autosave to user.
+- Consider frameless window
+
+- Add help file.
