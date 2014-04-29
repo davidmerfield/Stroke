@@ -1,18 +1,12 @@
 # TO DO:
 
-App icon
-Work out how to sign app for distribution
+Deploy website
 
-## Demo 
-Fix cursor blinking in demo.
-﻿Add natural​ pauses to demo.
-﻿Generate​ multiple screen renders for demo.
-text gets cut off in console
-
-## Nice to haves
+## Future features
+- Cross platform builds
+	- Generate​ multiple screen renders for demo.
 - Save app state (window positions) on​ quit, no need to prompt
-﻿Consider frameless window
-Add help file.
+- Consider frameless window
 - Auto suggest file name from first line.
+- Add help file.
 - Work out how to communicate autosave to user.
-Tweak demo copy

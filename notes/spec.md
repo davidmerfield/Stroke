@@ -119,3 +119,4 @@ copy selected text
 **View**
 - Full screen
 - Night mode?
+
