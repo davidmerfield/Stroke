@@ -6,9 +6,9 @@ html, body, #homepage {
 }
 
 body {
-   background: #fbf7f3;
+   background: #f9f7f0;
    height: 100%;
-   min-height: 100%
+   min-height: 100%;
 }
 
 #text {
@@ -88,7 +88,11 @@ h3 {font-size: 0.77em;margin: 0}
    margin-top: 1.5em;
    width: 106%;
    margin-left: -3%;
+   z-index: 1000;
+   max-height: 460px;
+   overflow: scroll;
 }
+
 #demo:before, #demo:after {
    content: ' ';
    position: absolute;
@@ -115,3 +119,9 @@ h3 {font-size: 0.77em;margin: 0}
    background-size: 6px;
    border-bottom: none;
 }
+
+#output.solidCursor p:last-child:after {
+  -webkit-animation: none
+}
+#output:after {
+   display: none;

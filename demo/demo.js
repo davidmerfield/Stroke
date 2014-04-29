@@ -5,24 +5,56 @@ var demo = function () {
    input = document.getElementById('input');
    output = document.getElementById('output');
 
+   function makeDelay(length) {
+
+      if (length === 'short') {
+         return Math.floor(Math.random()*120) + 30
+      };
+
+      if (length === 'medium') {
+         return Math.floor(Math.random()*150) + 40
+      };
+
+      if (length === 'long') {
+         return Math.floor(Math.random()*200) + 200
+      };
+
+      return Math.floor(Math.random()*100)+40
+
+   };
+
    function type(string, callback, p) {
       
+      var delay = makeDelay('short');
+
       if (!p) {
          p = document.createElement('p');
          output.appendChild(p);
       }
 
+      // Typing complete
       if (string === '') {
          return callback()
       }
 
       setTimeout(function(){
+
          var character = string.slice(0,1);
              string = string.slice(1);
 
+         if (character === '.') {
+            delay = makeDelay('long');
+         }
+
+         if (character === ' ') {
+            delay = makeDelay('medium');
+         }
+
          p.innerHTML += character;
-         type(string, callback, p)
-      }, Math.floor(Math.random()*100)+40); 
+         
+         type(string, callback, p);
+
+      }, delay); 
    }
 
    function crossOut(count, callback) {
@@ -36,10 +68,18 @@ var demo = function () {
 
       function selectChars(count) {
 
+         var delay = makeDelay('long');
+
          if (count === i) {
+
             var selectedText = window.getSelection();
-            typewriter().strikeOut(selectedText);
-            return callback()
+
+            return setTimeout(function(){
+               typewriter().strikeOut(selectedText);
+               typewriter().setFocus(input);
+               return callback()
+            }, delay); 
+
          };
 
          var range = document.createRange();
@@ -56,12 +96,14 @@ var demo = function () {
 
          setTimeout(function(){
             selectChars(count);
-         }, Math.floor(Math.random()*200) + 100); 
+         }, delay); 
 
       }
    }
 
    function newLine (callback) {
+
+      var delay = makeDelay('long');
 
       setTimeout(function(){
 
@@ -71,9 +113,10 @@ var demo = function () {
 
          setTimeout(function(){
             return callback()
-         }, Math.floor(Math.random()*200) + 100);
+         }, delay);
 
-      }, Math.floor(Math.random()*200) + 100);
+      }, delay);
+
    }
 
    return function () {
@@ -86,6 +129,8 @@ var demo = function () {
 
 
       input.setAttribute('style', 'display:none');
+      output.setAttribute('class', 'solidCursor');               
+
       type('Typewriter is a simple text editor.', function(){
 
       newLine(function(){
@@ -102,11 +147,13 @@ var demo = function () {
 
       newLine(function(){
       
-      type('Typewriter is perfect for first drafts. For forcing your ideas onto the page. For fixing writer\'s block.', function(){
+      type('Typewriter is perfect for that difficult first draft. For forcing ideas from your head and overcoming writer\'s block.', function(){
       
       typewriter().setHTMLof(input).to(output)
             
-            input.setAttribute('style', 'display:block');               
+            output.setAttribute('class', '');               
+            input.setAttribute('style', 'display:block');   
+
       });
       });
       }, output.lastChild);          
