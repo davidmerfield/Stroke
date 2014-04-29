@@ -1,17 +1,12 @@
+
 ### Typewriter
 
-A text editor with the features of a typewriter. Every keystroke is committed to the page. Deleting text only strikes it out. You can't edit anything. It's silly.
+Typewriter is a simple text editor. Every letter you type is permanent. A bit like a real typewriter.
+﻿
+You can't delete your mistakes but you can strike them out.
+﻿
+Typewriter is perfect for first drafts and overcoming writer's block.
 
-See the [demo here](http://davidmerfield.github.io/typewriter/).
+You should [download the app here](http://llllll.li/typewriter/).
 
-### Signing Mac app
-
-security find-identity
-
-then get the hash stored against 'Developer ID Application'
-
-codesign -s $HASH $PATHTOAPP
-
-verify signing with:
-
-codesign --display --verbose $PATHTOAPP
+![Imgur](http://i.imgur.com/n8aTKzs.png)
