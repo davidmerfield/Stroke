@@ -142,17 +142,15 @@ var app = function () {
     
     if (!filePath && document.filePath !== undefined) {
       var filePath = document.filePath
-    } else {
-      return
-    }
+    } 
 
     fs.readFile(filePath, 'utf8', function(err, data) {
 
-     if (err) throw err;
+      if (err) throw err;
 
-     input.innerHTML = textToHTML(data);
-     typewriter().setHTMLof(output).to(input);
-     typewriter().setFocus(input);
+      input.innerHTML = textToHTML(data);
+      typewriter().setHTMLof(output).to(input);
+      typewriter().setFocus(input);
 
     });
 
@@ -171,7 +169,7 @@ var app = function () {
       
       if (fileIsOpen(document.filePath)) {
         var openWindow = fileIsOpen(document.filePath);
-            openWindow.focus();
+            openWindow.focus(); 
         return currentWindow.close(true);
       };
 
@@ -329,11 +327,8 @@ var app = function () {
 
         output.setAttribute('class', '')
       
-        if (getQuitState()) {
-          currentWindow.close();
-        } else {
-          if (document.filePath) {saveFile(); }
-        }
+        if (getQuitState()) {currentWindow.close()}
+
       });
 
     }();
