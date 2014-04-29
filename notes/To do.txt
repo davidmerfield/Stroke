@@ -2,6 +2,18 @@
 
 Deploy (proper) website
 
+### Signing Mac app
+
+security find-identity
+
+then get the hash stored against 'Developer ID Application'
+
+codesign -s $HASH $PATHTOAPP
+
+verify signing with:
+
+codesign --display --verbose $PATHTOAPP
+
 ## Future To Do
 
 - Test and release linux and windows builds
