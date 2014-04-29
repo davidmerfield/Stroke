@@ -329,7 +329,7 @@ var app = function () {
         if (getQuitState()) {
           currentWindow.close();
         } else {
-          updateFile();          
+          if (document.filePath) {saveFile(); }
         }
       });
 
