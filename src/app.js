@@ -10,7 +10,7 @@ var app = function () {
 
       windowView = 'index.html',
       windowPrefs = {
-        position: 'mouse',
+        position: 'center',
         title: 'Untitled',
         width: 712,
         height: 820,
@@ -18,7 +18,7 @@ var app = function () {
         focus: false,
         frame: true,
         toolbar: false,
-        min_width: 300,
+        min_width: 200,
         min_height: 200
       };
 
@@ -309,7 +309,35 @@ var app = function () {
         currentWindow.x = parseInt(params.x);
         currentWindow.y = parseInt(params.y);
       }
-      
+
+      // Moves window to center, and on screen
+      if (currentWindow.window.screen.height*0.90 < windowPrefs.height) {
+        
+        var screenWidth = currentWindow.window.screen.width,
+            screenHeight = currentWindow.window.screen.height;
+
+        var windowHeight = screenHeight*0.75;
+
+        var windowWidth = windowHeight/1.15;
+
+        currentWindow.height = windowHeight;
+        currentWindow.width = windowWidth;
+
+        currentWindow.x = (screenWidth - windowWidth)/2;
+        currentWindow.y = (screenHeight - windowHeight)/2;
+
+      }
+
+      // Ensure frame is always visible      
+      if (currentWindow.y < 22) { // 22 is height of apple menu bar
+        currentWindow.y = 22
+      }
+
+      if (currentWindow.x < 0) {
+        currentWindow.x = 0
+      }
+
+      // We've got the window in a good spot, show it
       currentWindow.show();
       currentWindow.focus();
 
