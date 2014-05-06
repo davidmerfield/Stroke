@@ -33,19 +33,38 @@ body {
    width: 200px;
    right: -300px;
 }
-#about a {
+#about a, #downloaded a {
    font-size: 0.88em;
    color: rgba(0,0,0,0.35);
    text-decoration: none;
-} #about a em {
+} #about a em, #downloaded a em {
    font-weight: normal;
    font-style: normal;
    border-bottom: 2px solid rgba(0,0,0,0.1)
 }
+
+#downloaded a {
+   color: rgba(0,0,0,0.55);
+   font-size: 1em;
+}
+
 h2, h3, a {
    font-family: 'Droid Sans'
 }
 
+#downloaded {
+   font-family: 'Droid Sans';
+   position: absolute;
+   top: 50%;
+   height: 10em;
+   margin-top: -5em;
+   left: 50%;
+   width: 50em;
+   margin-left: -25em;
+   text-align: center;
+}
+
+#downloaded h1 {text-transform: none;letter-spacing: 0}
 h1 {
    font-weight: bold;
    color: rgba(0,0,0,0.85);
