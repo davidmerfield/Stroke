@@ -1,55 +1,89 @@
+/*
+
+The following removes lots of useful functionality from a contenteditable div. Specifically:
+
+- No text can be deleted from the div.
+- Only text the user types is added to the div. 
+- Text can only be added to the end of the div. 
+- Selected text is struck out when the user presses the delete key
+
+*/
 var typewriter = function () {
 
-   var input = document.getElementById('input'), // captures the user's text input
-       output = document.getElementById('output'); // renders the user's text input
+   var input = document.getElementById('input'),
+       // #Input captures text input, is hidden from user
 
-   // Keydown fires first
+       output = document.getElementById('output');
+       // #Output renders #Input's text and is used to capture strikethroughs
+
    input.onkeydown = function (e) {      
       
       var keyCode = e.which;
 
-      // Disable delete key
+      // Disable delete
       if (keyCode === 8) {
          return e.preventDefault();
       };
 
-      // Disable CMD or CNTRL if in browser
-      if (e.metaKey && !inDesktop()) { 
-         if (keyCode === 82) {return} // allow reload (CMD + r) to function normally in a browser
+      // Disable CMD or CNTRL keys in the browser
+      if (e.metaKey && !inDesktop()) {
+
+         // But allow reload (CMD + r)
+         if (keyCode === 82) {return}
+         
          return e.preventDefault();
       }
       
       // Arrow keys
       if (isArrowKey(keyCode)) {
 
-         // If holding shift and not right arrow then 
+         // We need to stop the arrow keys from moving the caret since
+         // new text can only be added to the end of the document.
+         // However, we also want to allow the user to make a selection
+         // and modify it with the arrow keys
+
+         // Therefore, if the user is holding shift and presses
+         // any arrow key except the right key we set the focus on #output.
          if (e.shiftKey && keyCode !== 39) {
-            return setFocus(output); // move to output to allow selection
+            return setFocus(output); 
          };
 
-         // Otherwise just disable them
+         // Otherwise just disable the arrow keys
          return e.preventDefault();
       };
 
-      // Handle return key
+      // Return key
       if (keyCode === 13) {
-         input.innerHTML += '<p>&#xfeff;</p>'; // zero width char allows us to setfocus() after the br tag
+
+         // The default behaviour of the return key in a contenteditable
+         // is to append a new empty <p> tag only when the next key is pressed.
+
+         // However, we need a line break immediately to ensure the caret 
+         // behaves correctly. Also in order to set focus correctly on the 
+         // content editable div, we add a zero-width character inside the new p.
+
+         input.innerHTML += '<p>&#xfeff;</p>'; 
          e.preventDefault();
       };
 
-      // Handle tab key
+      // Tab key
       if(keyCode === 9) {
+
+         // We want the tab key to behave like one in a text editor.
+
          input.lastChild.innerHTML += '&nbsp;&nbsp;';
          e.preventDefault();
-      }
+      };
 
-      // The timeout allows us to acces the
-      // updated contents of input.innerHTML
-      // without needing to wait til input.onkeyup
+      // The timeout allows us to acces the new and updated contents
+      // of input.innerHTML without needing to wait til input.onkeyup
       return setTimeout(function(){
+         
          setHTMLof(output).to(input);
          setFocus(input);
-         return moveViewportToBottom();
+
+         // Ensures caret is always in view
+         return moveViewportToBottom(); 
       }, 0);
 
    }
@@ -58,18 +92,26 @@ var typewriter = function () {
       
       var keyCode = e.which;
 
-      // Modify delete  
+      // Delete key
       if (e.which === 8) {
+
+         // Don't remove any text
          e.preventDefault();
+
+         // Wrap any selected text in a span which make the text appear
+         // like it's been struck out
          strikeOut(selectedText());
+
+         // Update input's content to reflect the new span tag
          setHTMLof(input).to(output);
+
          return setFocus(input);                  
       }
 
       // Shift is pressed
       if (e.shiftKey) {
-         // allow default event since
-         // shift is used to modify selection
+         
+         // allow default since shift is used to modify selection
          return
       }
 
@@ -97,7 +139,6 @@ var typewriter = function () {
       return (keyCode <= 40 && keyCode >= 37)
    }
 
-   // Ensures caret is always in view
    function moveViewportToBottom () {
       return window.scrollTo(0, document.body.offsetHeight);
    }   
@@ -183,11 +224,11 @@ var typewriter = function () {
    function setFocus (el) {
       
       // .focus() puts caret at start of el
-      // Works by creating a user selection then collapses it
+      // This works by creating a selection then collapsing it
    
       var range = document.createRange();
           range.selectNodeContents(el);
-          range.collapse(false); // false to collapse at end of range
+          range.collapse(false); // false collapses the range to its endpoint
       
       var selection = window.getSelection();
           selection.removeAllRanges(); // clear existing user selection
