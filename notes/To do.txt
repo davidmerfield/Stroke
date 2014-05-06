@@ -1,6 +1,7 @@
 # TO DO:
 
-Deploy (proper) website
+- Consider frameless window
+
 
 ### Signing Mac app
 
@@ -20,9 +21,8 @@ codesign --display --verbose $PATHTOAPP
 	- Generate​ multiple screen renders for demo.
 	- Test UA and serve relevant demo content
 
-- Save app state (window positions) on​ quit, no need to prompt
 - Auto suggest file name from first line.
 - Work out how to communicate autosave to user.
-- Consider frameless window
+- Save app state (window positions) on​ quit, no need to prompt
 
 - Add help file.
