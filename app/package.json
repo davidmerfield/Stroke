@@ -1,0 +1,11 @@
+{
+  "name": "Typewriter",
+  "version": "1.0.0",
+  "main": "index.html",
+  "no-edit-menu": true,
+  "window": {
+    "frame": true,
+    "toolbar": false,
+    "show": false
+  }
+}

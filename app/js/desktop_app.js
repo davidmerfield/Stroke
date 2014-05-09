@@ -1,4 +1,4 @@
-var app = function () {
+var desktopApp = function () {
 
   var gui = require('nw.gui'),
       fs = require('fs'),
@@ -8,7 +8,10 @@ var app = function () {
 
       currentWindow = gui.Window.get(),
 
-      windowView = 'index.html',
+      // http://llllll.li/typewriter/app/
+
+      windowView = 'index.html#cache',
+
       windowPrefs = {
         position: 'center',
         title: 'Untitled',
@@ -18,8 +21,8 @@ var app = function () {
         focus: false,
         frame: true,
         toolbar: false,
-        min_width: 200,
-        min_height: 200
+        min_width: 300,
+        min_height: 300
       };
 
   document.fileName = undefined;
@@ -29,6 +32,12 @@ var app = function () {
   document.onkeydown = function (e) {
       
       var keyCode = e.which;
+
+      // CMD + C
+      if (keyCode == 67 && e.metaKey) {
+        var clipboard = gui.Clipboard.get();
+        clipboard.set(htmlToText(output.innerHTML), 'text');
+      }
 
       // CMD + P 
       if (keyCode == 80 && e.metaKey) {
@@ -81,12 +90,12 @@ var app = function () {
   }
 
   function removeWindow (currentWindow) {
-    for (var i in global.typewriterWindows) {
+    for (var i in global.windowManager) {
 
-      var openWindow = global.typewriterWindows[i];
+      var openWindow = global.windowManager[i];
 
       if (openWindow === currentWindow) {
-        global.typewriterWindows.splice(i, 1);
+        global.windowManager.splice(i, 1);
         return 
       };
     }
@@ -195,10 +204,10 @@ var app = function () {
 
   function fileIsOpen (path) {
 
-    for (var i in global.typewriterWindows) {
+    for (var i in global.windowManager) {
 
-      var openWindow = global.typewriterWindows[i],
-          openPath = global.typewriterWindows[i].window.document.filePath;
+      var openWindow = global.windowManager[i],
+          openPath = global.windowManager[i].window.document.filePath;
 
       if (openWindow === currentWindow) {continue};
 
@@ -252,8 +261,8 @@ var app = function () {
 
   function getParams () {
     var params = {};
-    if (location.search) {
-        var parts = location.search.substring(1).split('&');
+    if (location.hash) {
+        var parts = location.hash.substring(7).split('&');
 
         for (var i = 0; i < parts.length; i++) {
             var nv = parts[i].split('=');
@@ -285,6 +294,48 @@ var app = function () {
     return html
   }
 
+  function sizeWindow () {
+
+    var screenWidth = currentWindow.window.screen.width,
+        screenHeight = currentWindow.window.screen.height;
+
+    // Moves window to center, and on screen
+    if (screenHeight*0.90 < currentWindow.height) {
+      currentWindow.height = screenHeight*0.75;
+      currentWindow.width = screenHeight*0.6;
+    } else {
+      currentWindow.width = windowPrefs.width;
+      currentWindow.height = windowPrefs.height;
+    }
+
+    currentWindow.setMinimumSize(windowPrefs.min_width, windowPrefs.min_height);
+
+  }
+
+  function positionWindow (params) {
+
+    if (params.x && params.y) {
+      currentWindow.x = parseInt(params.x);
+      return currentWindow.y = parseInt(params.y);
+    }
+
+    var screenWidth = currentWindow.window.screen.width,
+        screenHeight = currentWindow.window.screen.height;
+
+    currentWindow.x = (screenWidth - currentWindow.width)/2;
+    currentWindow.y = (screenHeight - currentWindow.height)/2;
+
+    // Ensure frame is always visible      
+    if (currentWindow.y < 22) { // 22 is height of apple menu bar
+      currentWindow.y = 22
+    }
+
+    if (currentWindow.x < 0) {
+      currentWindow.x = 0
+    }
+
+  }
+
   function setQuitState (state) {
     global.typewriterQuit = state;
   }
@@ -297,50 +348,27 @@ var app = function () {
 
       var params = getParams();
 
-      if (params.firstWindow) {
-        buildMenu();
-        global.typewriterWindows = [currentWindow];
-        setQuitState(false)
+      if (global.windowManager) {
+        global.windowManager.push(currentWindow)
       } else {
-        global.typewriterWindows.push(currentWindow)
+        buildMenu();
+        global.windowManager = [currentWindow];
+        setQuitState(false)
       }
 
-      if (params.x && params.y) {
-        currentWindow.x = parseInt(params.x);
-        currentWindow.y = parseInt(params.y);
-      }
+      currentWindow.x = -10000;
+      currentWindow.y = -10000;
 
-      // Moves window to center, and on screen
-      if (currentWindow.window.screen.height*0.90 < windowPrefs.height) {
-        
-        var screenWidth = currentWindow.window.screen.width,
-            screenHeight = currentWindow.window.screen.height;
-
-        var windowHeight = screenHeight*0.75;
-
-        var windowWidth = windowHeight/1.15;
-
-        currentWindow.height = windowHeight;
-        currentWindow.width = windowWidth;
-
-        currentWindow.x = (screenWidth - windowWidth)/2;
-        currentWindow.y = (screenHeight - windowHeight)/2;
-
-      }
-
-      // Ensure frame is always visible      
-      if (currentWindow.y < 22) { // 22 is height of apple menu bar
-        currentWindow.y = 22
-      }
-
-      if (currentWindow.x < 0) {
-        currentWindow.x = 0
-      }
+      sizeWindow();
+      
+      currentWindow.title = windowPrefs.title;
 
       // We've got the window in a good spot, show it
       currentWindow.show();
       currentWindow.focus();
 
+      positionWindow(params);
+      
       if (params.openFile) {
         readFile();
       };
@@ -353,8 +381,8 @@ var app = function () {
       
       currentWindow.on('focus', function(){
 
-        output.setAttribute('class', '')
-      
+        output.setAttribute('class', '');
+        typewriter().setFocus(input);
         if (getQuitState()) {currentWindow.close()}
 
       });
