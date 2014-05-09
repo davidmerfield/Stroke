@@ -6,7 +6,6 @@ Typewriter is perfect for first drafts and overcoming writer's block.
 
 You should [download the app here](http://llllll.li/typewriter/).
 
-## About the app
+#### About
 
-Typewriter was built using [node-webkit](https://github.com/rogerwang/node-webkit). 
-
+Typewriter was built using [node-webkit](https://github.com/rogerwang/node-webkit).
