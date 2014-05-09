@@ -1,0 +1,29 @@
+## Signing Mac app
+
+security find-identity
+
+then get the hash stored against 'Developer ID Application'
+
+codesign -s $HASH $PATHTOAPP
+
+verify signing with:
+
+codesign --display --verbose $PATHTOAPP
+
+## How to update the app
+
+Add manifest="offline.appcache" to <html> tag of index.html
+Make sure you change the timestamp in offline.appcache or the app will not load the new files
+
+Set 'main' of ./app/package.json to 'llllll.li/typewriter/app/index.html'
+
+Add these to ./app/package.json
+
+"node-remote": "llllll.li",
+"webkit": {"page-cache": false},
+
+Set 'windowView' in desktop_app.js to 'llllll.li/typewriter/app/index.html#cache'
+
+Upload the contents of ./app to llllll.li/typewriter/app
+
+
