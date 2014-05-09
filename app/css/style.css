@@ -1,9 +1,3 @@
-@font-face {
-  font-family: 'Droid Sans Mono';
-  src: url('./DroidSansMono.ttf');
-  font-weight: 400;
-}
-
 /* Reset */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, b, ul, ol, li, section {
   margin: 0;
@@ -100,3 +94,6 @@ body {
   left: 0;
   right: 0;
 }
+
+/* Hide file pickers used to acces fs */
+input[type="file"] {display: none;}
