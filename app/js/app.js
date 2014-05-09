@@ -3,12 +3,10 @@ var desktopApp = function () {
   var gui = require('nw.gui'),
       fs = require('fs'),
 
-      input = document.getElementById('input'), // captures the user's text input
-      output = document.getElementById('output'), // renders the user's text input
+      input = document.getElementById('input'), 
+      output = document.getElementById('output'), 
 
       currentWindow = gui.Window.get(),
-
-      // http://llllll.li/typewriter/app/
 
       windowView = 'index.html#cache',
 
@@ -27,6 +25,62 @@ var desktopApp = function () {
 
   document.fileName = undefined;
   document.filePath = undefined;
+
+  function init () {
+
+    var params = getParams();
+
+    // Check if this is the first app window
+    if (!global.windowManager) {
+
+      // If so draw the menu bar
+      buildMenu();
+
+      // Store the current window
+      // This array is used to make sure we don't 
+      // open two windows containing the same file
+      global.windowManager = [currentWindow];
+
+      // Set the app's quit state flag
+      // We check this every time we focus a window
+      // to determine whether or not to close the window
+      setQuitState(false)
+
+    } else {
+
+      // Store the current window
+      global.windowManager.push(currentWindow)
+    }
+
+    // Ensure the window is not on screen
+    currentWindow.x = -10000;
+    currentWindow.y = -10000;
+
+    // Set the window's size
+    sizeWindow();
+    
+    // Set the window's title
+    currentWindow.title = windowPrefs.title;
+
+    // Make the window visible
+    currentWindow.show();
+
+    // Set the focus on the window
+    currentWindow.focus();
+
+    // Move the window to the center of the screen
+    positionWindow(params);
+    
+    if (params.openFile) {
+      readFile();
+    };
+
+    // Declare the handlers for window events
+    currentWindow.on('close', closeFile);
+    currentWindow.on('blur', windowBlur);
+    currentWindow.on('focus', windowFocus);
+
+  };
 
   // Listen for app keyboard shortcuts
   document.onkeydown = function (e) {
@@ -87,7 +141,7 @@ var desktopApp = function () {
 
   function openFile () {
      newFile(true);
-  }
+  };
 
   function removeWindow (currentWindow) {
     for (var i in global.windowManager) {
@@ -99,7 +153,7 @@ var desktopApp = function () {
         return 
       };
     }
-  }
+  };
 
   function closeFile () {
 
@@ -281,18 +335,34 @@ var desktopApp = function () {
       text = text.substring(0, text.length - 15);
     }
     return text
-  }
+  };
 
   function htmlToText (html) {
+    
+    var tmp = document.createElement('section');
+        tmp.innerHTML = html;
+    
+    do {
+        var strikes = tmp.getElementsByClassName('strike'),
+            strikeLength = strikes.length;
+        
+        for (var i in strikes) {
+            var strikeNode = strikes[i];
+            if (strikeNode.parentNode) {strikeNode.parentNode.removeChild(strikeNode)}
+        };
+    } while (strikeLength > 0);
+    
+    html = tmp.innerHTML;
+    
     html = html.replace(/<p>/gi, "");
     html = html.replace(/<\/p>/gi, "\n");
-    html = html.replace(/&nbsp;/gi, "");
-    html = html.replace(/\s<span class="strike">[^>]*<\/span>/g, '');
-    html = html.replace(/<span class="strike">[^>]*<\/span>/g, '');
+    html = html.replace(/&nbsp;/gi, " ");
+    html = html.replace(/&#xfeff;/gi, " ");
     html = html.replace(/<span>/gi, "");
     html = html.replace(/<\/span>/gi, "");
+
     return html
-  }
+  };
 
   function sizeWindow () {
 
@@ -310,7 +380,7 @@ var desktopApp = function () {
 
     currentWindow.setMinimumSize(windowPrefs.min_width, windowPrefs.min_height);
 
-  }
+  };
 
   function positionWindow (params) {
 
@@ -334,7 +404,21 @@ var desktopApp = function () {
       currentWindow.x = 0
     }
 
-  }
+  };
+
+  function windowFocus () {    
+    
+    output.setAttribute('class', '');
+    
+    typewriter().setFocus(input);
+    
+    if (getQuitState()) {currentWindow.close()}
+
+  };
+
+  function windowBlur () {
+    output.setAttribute('class', 'blurred');
+  };
 
   function setQuitState (state) {
     global.typewriterQuit = state;
@@ -344,48 +428,5 @@ var desktopApp = function () {
     return global.typewriterQuit
   }
 
-  return function init () {
-
-      var params = getParams();
-
-      if (global.windowManager) {
-        global.windowManager.push(currentWindow)
-      } else {
-        buildMenu();
-        global.windowManager = [currentWindow];
-        setQuitState(false)
-      }
-
-      currentWindow.x = -10000;
-      currentWindow.y = -10000;
-
-      sizeWindow();
-      
-      currentWindow.title = windowPrefs.title;
-
-      // We've got the window in a good spot, show it
-      currentWindow.show();
-      currentWindow.focus();
-
-      positionWindow(params);
-      
-      if (params.openFile) {
-        readFile();
-      };
-
-      currentWindow.on('close', closeFile);
-
-      currentWindow.on('blur', function(){
-        output.setAttribute('class', 'blurred')
-      });
-      
-      currentWindow.on('focus', function(){
-
-        output.setAttribute('class', '');
-        typewriter().setFocus(input);
-        if (getQuitState()) {currentWindow.close()}
-
-      });
-
-    }();
+  return init();
 }
