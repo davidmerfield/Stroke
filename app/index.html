@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <script type="text/javascript" src="./js/typewriter.js"></script>
+      <script type="text/javascript" src="./js/desktop_app.js"></script>
+      <style type="text/css">
+         @font-face {
+           font-family: 'Droid Sans Mono';
+           src: url('./css/DroidSansMono.ttf');
+         }
+      </style>
+      <link rel="stylesheet" href="./css/style.css">
+   </head>
+   <body>
+      <section id="input" contenteditable="true"></section>  
+      <section id="output" contenteditable="true" spellcheck="false"></section>
+      <input type="file" id="saveDialog" nwsaveas="~/Untitled.txt" accept=".txt" />  
+      <input type="file" id="openDialog" accept=".txt"/>  
+      <script type="text/javascript">typewriter().init();</script>
+   </body>
+</html>
