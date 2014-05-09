@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
       nodewebkit: {
         options: {
+            credits: "./app/credits.html",
             build_dir: './builds', // Where the build version of my node-webkit app is saved
             mac: true, // We want to build it for mac
             mac_icns: './src/img/app.icns',
