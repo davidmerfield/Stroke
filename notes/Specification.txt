@@ -1,0 +1,62 @@
+# Typewriter App
+
+The app basically removes lots of useful functionality
+from a pair of contenteditable divs. Specifically:
+
+- No text can be deleted from the divs.
+- Selected text is struck out when the user presses delete
+- Only text the user types is added to the divs. 
+- Text can only be added to the end of the divs. 
+
+The app basically works by mirroring the content of one div in another.
+Doing this allows us to hide the system's native caret and draw our own.
+
+## Names
+
+typewriter - obvious but possible
+blockwriter - taken by mr khoi
+drafty
+onwriter
+typewrite 
+immovable type - ha
+fixwriter
+everwriter
+blitz writer
+
+# Typeface options
+
+Droid sans mono? yes
+Source code pro
+inconsolata maybe
+
+# Implementation ideas
+
+if you stop typing, perhaps increase the pulse of the caret?
+
+by default strikethroughs are removed from saved version
+
+Rich text makes most sense so strikethroughs can be included
+
+If you save at rtf then you preserve strikethroughs
+
+Be able to move selection caret with keys (would look like text selection). Pressing another character except delete would continue typing as normal. 
+
+Will need an RTF to HTML parser, html to RTF parser. Can I encode this shit as a text file?
+
+Does the txt format allow for hidden text? Or some markup?
+
+**The goal would be to be able to open the text file in another program and not see the strikethroughs.**
+
+Would be awesome to include strikethroughs in our program, but same text file doesn't show them when opened in another.
+
+select all text,
+copy selected text
+
+## Thoughts
+
+There's a caret but you can't move it with the arrow keys. Somehow change the cursor to something which communicates deletion. You can select text, perhaps even move a pseudo caret for selection purposes with the keyboard. But you cannot change the location for the next input of text.
+
+Always onwards, always forwards.
+
+one press of the key, one character
+(you can't hold down key and produce lines of characters)
