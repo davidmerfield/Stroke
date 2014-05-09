@@ -1,12 +1,11 @@
 {
   "name": "Typewriter",
-  "version": "0.0.0",
-  "description": "A silly text editor",
+  "version": "1.0.0",
+  "description": "A text editor with no features",
   "repository": {
     "type": "git",
     "url": "https://github.com/davidmerfield/Typewriter.git"
   },
-  "gitHead": "c7f945440691559eb0fe7c5ca50fac8fbefacc2c",
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-node-webkit-builder": "^0.1.20"
