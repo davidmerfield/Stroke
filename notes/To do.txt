@@ -1,20 +1,6 @@
-# TO DO:
+# TO DO
 
-- Consider frameless window
-
-
-### Signing Mac app
-
-security find-identity
-
-then get the hash stored against 'Developer ID Application'
-
-codesign -s $HASH $PATHTOAPP
-
-verify signing with:
-
-codesign --display --verbose $PATHTOAPP
-
+Determine whether or not it's secure
 ## Future To Do
 
 - Test and release linux and windows builds
