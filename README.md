@@ -1,3 +1,4 @@
+![Typewriter](http://i.imgur.com/mArYm7X.jpg?1)
 ### Typewriter
 
 Typewriter is a simple text editor. Every letter you type is permanent. A bit like a real typewriter. You can't delete your mistakes but you can strike them out.
