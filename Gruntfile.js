@@ -5,18 +5,19 @@ module.exports = function(grunt) {
       nodewebkit: {
         options: {
             credits: "./app/credits.html",
-            build_dir: './builds', // Where the build version of my node-webkit app is saved
-            mac: true, // We want to build it for mac
+            build_dir: './builds', 
+            mac: true, 
             mac_icns: './app/Typewriter.icns',
-            win: false, // We want to build it for win
-            linux32: false, // We don't need linux32
-            linux64: false // We don't need linux64
+            win: false, 
+            linux32: false,
+            linux64: false 
         },
-        src: ['./app/**/*'] // Your node-webkit app
+        src: ['./app/**/*'] 
       },
     })
 
     grunt.loadNpmTasks('grunt-node-webkit-builder');
+    
     grunt.registerTask('default', 'nodewebkit');
-
+    
 };
