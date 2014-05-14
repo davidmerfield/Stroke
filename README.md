@@ -9,3 +9,7 @@ You should [download the app here](http://llllll.li/typewriter/).
 #### About
 
 Typewriter was built using [node-webkit](https://github.com/rogerwang/node-webkit).
+
+#### License
+
+This project is licensed under the terms of the MIT license.
