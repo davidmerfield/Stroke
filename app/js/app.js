@@ -421,13 +421,5 @@ var desktopApp = function () {
     output.setAttribute('class', 'blurred');
   };
 
-  function setQuitState (state) {
-    global.typewriterQuit = state;
-  }
-
-  function getQuitState () {
-    return global.typewriterQuit
-  }
-
   return init();
 }
