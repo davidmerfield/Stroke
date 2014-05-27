@@ -1,7 +1,7 @@
 {
   "name": "Typewriter",
   "version": "1.0.0",
-  "description": "A text editor with no features",
+  "description": "A text editor for first drafts",
   "repository": {
     "type": "git",
     "url": "https://github.com/davidmerfield/Typewriter.git"
