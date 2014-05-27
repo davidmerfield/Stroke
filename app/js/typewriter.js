@@ -98,7 +98,7 @@ var typewriter = function () {
       var keyCode = e.which;
 
       // Delete key
-      if (e.which === 8) {
+      if (keyCode === 8) {
 
          // Don't remove any text
          e.preventDefault();
@@ -110,14 +110,21 @@ var typewriter = function () {
          setHTMLof(input).to(output);
 
          return setFocus(input);                  
-      }
+      };
 
-      // Shift is pressed
-      if (e.shiftKey || e.metaKey) {
+      // Shift key
+      if (e.shiftKey) {
          
          // allow default since shift is used to modify selection
+         if (isArrowKey(keyCode) || keyCode === 16) {
+            return            
+         };
+      };
+
+      // Command key
+      if (e.metaKey) {
          return
-      }
+      };
 
       // But disable everything else
       e.preventDefault();
