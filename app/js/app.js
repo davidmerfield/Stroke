@@ -89,8 +89,9 @@ var desktopApp = function () {
 
       // CMD + C
       if (keyCode == 67 && e.metaKey) {
-        var clipboard = gui.Clipboard.get();
-        clipboard.set(htmlToText(output.innerHTML), 'text');
+        var clipboard = gui.Clipboard.get(),
+            text = htmlToText(output.innerHTML).slice(0, -1);
+        clipboard.set(text, 'text');
       }
 
       // CMD + P 
