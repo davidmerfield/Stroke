@@ -31,25 +31,23 @@ var desktopApp = function () {
     var params = getParams();
 
     // Check if this is the first app window
-    if (!global.windowManager) {
-
-      // If so draw the menu bar
-      buildMenu();
+    if (!global.typewriter) {
 
       // Store the current window
       // This array is used to make sure we don't 
       // open two windows containing the same file
-      global.windowManager = [currentWindow];
+      global.typewriter = {
+        openWindows: [currentWindow],
+        quit: false
+      };
 
-      // Set the app's quit state flag
-      // We check this every time we focus a window
-      // to determine whether or not to close the window
-      setQuitState(false)
+      // If so draw the menu bar
+      buildMenu();
 
     } else {
 
       // Store the current window
-      global.windowManager.push(currentWindow)
+      global.typewriter.openWindows.push(currentWindow)
     }
 
     // Ensure the window is not on screen
@@ -116,7 +114,7 @@ var desktopApp = function () {
 
       if (keyCode === 81 && e.metaKey) {
         e.preventDefault();
-        setQuitState(true);
+        global.typewriter.quit = true;
         closeFile();
       }
   };
@@ -145,12 +143,12 @@ var desktopApp = function () {
   };
 
   function removeWindow (currentWindow) {
-    for (var i in global.windowManager) {
+    for (var i in global.typewriter.openWindows) {
 
-      var openWindow = global.windowManager[i];
+      var openWindow = global.typewriter.openWindows[i];
 
       if (openWindow === currentWindow) {
-        global.windowManager.splice(i, 1);
+        global.typewriter.openWindows.splice(i, 1);
         return 
       };
     }
@@ -163,7 +161,7 @@ var desktopApp = function () {
       var reallyClose = window.confirm("You have not yet saved your work. Do you still want to close this document?");
       
       if (!reallyClose) {
-        setQuitState(false);
+        global.typewriter.quit = false;
         return saveFile(true);               
       }
 
@@ -193,7 +191,7 @@ var desktopApp = function () {
       fs.writeFile(document.filePath, text, function(err) {
         if (err) throw err;
         if (thenClose) {
-          setQuitState(true);
+          global.typewriter.quit = true;
           currentWindow.close(true);
         }
         currentWindow.title = document.fileName;
@@ -259,10 +257,10 @@ var desktopApp = function () {
 
   function fileIsOpen (path) {
 
-    for (var i in global.windowManager) {
+    for (var i in global.typewriter.openWindows) {
 
-      var openWindow = global.windowManager[i],
-          openPath = global.windowManager[i].window.document.filePath;
+      var openWindow = global.typewriter.openWindows[i],
+          openPath = global.typewriter.openWindows[i].window.document.filePath;
 
       if (openWindow === currentWindow) {continue};
 
@@ -413,7 +411,7 @@ var desktopApp = function () {
     
     typewriter().setFocus(input);
     
-    if (getQuitState()) {currentWindow.close()}
+    if (global.typewriter.quit) {currentWindow.close()}
 
   };
 
