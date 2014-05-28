@@ -294,6 +294,7 @@ window.desktopApp = (function () {
     return params
   };
 
+  // takes text, returns html with p tags etc.
   function textToHTML (text) {
     text = '<p>' + text;
     text = text.replace(/[\n]/gi, "</p><p>");
@@ -304,8 +305,19 @@ window.desktopApp = (function () {
     return text
   };
 
+  // takes html, removes struck out text then returns text with newlines etc
   function htmlToText (html) {
-    
+    html = removeStrikes(html);
+    html = html.replace(/<p>/gi, "");
+    html = html.replace(/<\/p>/gi, "\n");
+    html = html.replace(/&nbsp;/gi, " ");
+    html = html.replace(/&#xfeff;/gi, " ");
+    html = html.replace(/<span>/gi, "");
+    html = html.replace(/<\/span>/gi, "");
+    return html
+  };
+
+  function removeStrikes(html) {
     var tmp = document.createElement('section');
         tmp.innerHTML = html;
     
@@ -319,46 +331,53 @@ window.desktopApp = (function () {
         };
     } while (strikeLength > 0);
     
-    html = tmp.innerHTML;
-    
-    html = html.replace(/<p>/gi, "");
-    html = html.replace(/<\/p>/gi, "\n");
-    html = html.replace(/&nbsp;/gi, " ");
-    html = html.replace(/&#xfeff;/gi, " ");
-    html = html.replace(/<span>/gi, "");
-    html = html.replace(/<\/span>/gi, "");
-
-    return html
+    return tmp.innerHTML;
   };
 
+  // Ensures window fits on screen
   function sizeWindow () {
 
     var screenWidth = currentWindow.window.screen.width,
         screenHeight = currentWindow.window.screen.height;
 
-    // Moves window to center, and on screen
     if (screenHeight*0.90 < currentWindow.height) {
       currentWindow.height = screenHeight*0.75;
       currentWindow.width = screenHeight*0.6;
     } else {
-      currentWindow.width = windowPrefs.width;
-      currentWindow.height = windowPrefs.height;
+      currentWindow.width = defaultWindow.width;
+      currentWindow.height = defaultWindow.height;
     }
 
-    currentWindow.setMinimumSize(windowPrefs.min_width, windowPrefs.min_height);
+    currentWindow.setMinimumSize(defaultWindow.min_width, defaultWindow.min_height);
 
   };
 
+  // Centers then shows the window
   function positionWindow (params) {
 
+    // x and y distance in pixels of new window from old window
+    var newWindowOffset = 32;
+
+    // Ensure the window is not on screen
+    currentWindow.x = -10000;
+    currentWindow.y = -10000;
+
+    // Make the window visible
+    currentWindow.show();
+
+    // Set the focus on the window
+    currentWindow.focus();
+
+    // Move the window to the passed preference
     if (params.x && params.y) {
-      currentWindow.x = parseInt(params.x);
-      return currentWindow.y = parseInt(params.y);
+      currentWindow.x = parseInt(params.x) + newWindowOffset;
+      return currentWindow.y = parseInt(params.y) + newWindowOffset;
     }
 
     var screenWidth = currentWindow.window.screen.width,
         screenHeight = currentWindow.window.screen.height;
 
+    // Center the window
     currentWindow.x = (screenWidth - currentWindow.width)/2;
     currentWindow.y = (screenHeight - currentWindow.height)/2;
 
@@ -370,7 +389,21 @@ window.desktopApp = (function () {
     if (currentWindow.x < 0) {
       currentWindow.x = 0
     }
+  };
 
+  function windowFocus () {
+
+    // Determine whether or not to close this window
+    if (global.typewriter.quit) {currentWindow.close()};
+
+    // let other windows know this window is in focus
+    global.typewriter.focussedWindow = currentWindow;
+
+    // make the caret visible
+    typewriter.enableCaret();
+
+    // Update the file if it's changed elsewhere
+    readFile();
   };
 
   function windowFocus () {    
