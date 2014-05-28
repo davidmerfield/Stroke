@@ -1,4 +1,4 @@
-var desktopApp = function () {
+window.desktopApp = (function () {
 
   var gui = require('nw.gui'),
       fs = require('fs'),
