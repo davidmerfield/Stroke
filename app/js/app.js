@@ -64,27 +64,16 @@ window.desktopApp = (function () {
     document.onkeyup = function (e) {if (filePath) {saveFile()}};
   };
 
-  // Listen for app keyboard shortcuts
-  document.onkeydown = function (e) {
-      
-      var keyCode = e.which;
+  function newWindow (options) {
 
-      // CMD + C
-      if (keyCode == 67 && e.metaKey) {
-        var clipboard = gui.Clipboard.get(),
-            text = htmlToText(output.innerHTML).slice(0, -1);
-        clipboard.set(text, 'text');
-      }
+    // We pass the position of the current window to help position the new window
+    var url = windowView + '?x=' + currentWindow.x + '&y=' + currentWindow.y;
 
-      // CMD + P 
-      if (keyCode == 80 && e.metaKey) {
-        printFile();
-      };
+    // Tells the new window to open the select file interface
+    if (options && options.open) {url += '&openFile=true'};
 
-      // CMD + N
-      if (keyCode === 78 && e.metaKey) {
-          newFile();
-      };
+    gui.Window.open(url, defaultWindow);
+  };
 
       // CMD + S
       if (keyCode === 83 && e.metaKey) {
