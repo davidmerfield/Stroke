@@ -161,63 +161,37 @@ window.desktopApp = (function () {
       });               
     };
 
-    if (document.filePath !== undefined) {
-      return fs.writeFile(document.filePath, text, function(err) {
-        if (err) throw err;
-      })
-    }
+    // Let other windows know this file is no longer open
+    if (filePath) {delete global.typewriter.openFiles[filePath]};
 
-    filePicker('saveDialog', function(value){
-      
-      document.filePath = value;
-      document.fileName = document.filePath.replace(/^.*[\\\/]/, '');
+    // And finally close this window
+    return currentWindow.close(true);   
+  };
 
-      fs.writeFile(document.filePath, text, function(err) {
-        if (err) throw err;
-        if (thenClose) {
-          global.typewriter.quit = true;
-          currentWindow.close(true);
-        }
-        currentWindow.title = document.fileName;
-      });
+  function readFile () {   
 
-    });     
-  }
-
-  function updateFile (filePath) {
-    
-    if (!filePath && document.filePath !== undefined) {
-      var filePath = document.filePath
-    } 
+    // No file to read!
+    if (!filePath) {return};
 
     fs.readFile(filePath, 'utf8', function(err, data) {
 
       if (err) throw err;
 
-      input.innerHTML = textToHTML(data);
-      typewriter().setHTMLof(output).to(input);
-      typewriter().setFocus(input);
-
+      typewriter.setContents(textToHTML(data));
     });
+  };
 
-  }
+  // Used to read and save files
+  function openFilePicker (id, callback) {
 
-  function printFile () {
-    window.print();
-  }
+    var picker = document.getElementById(id);
 
-  function readFile () {
+    picker.addEventListener('change', function(e){
+      return callback(this.value)
+    }, false);
 
-    filePicker('openDialog', function(value){
-      
-      document.filePath = value;
-      document.fileName = document.filePath.replace(/^.*[\\\/]/, '');
-      
-      if (fileIsOpen(document.filePath)) {
-        var openWindow = fileIsOpen(document.filePath);
-            openWindow.focus(); 
-        return currentWindow.close(true);
-      };
+    picker.click();
+  };
 
       currentWindow.title = document.fileName;
 
