@@ -1,29 +1,31 @@
-var typewriter = function () {
-
-   // #Input is used to capture text input, is hidden from user
-   var input = document.getElementById('input'),
-   
-   // #Output is used to render #Input's value
-      output = document.getElementById('output');
+var typewriter = (function () {
 
    function init () {
-      
+
       // Loads the desktop app's features if possible
-      if (inDesktop()) {desktopApp()};
+      if (inDesktop()) {desktopApp.init()};
+
+      // #Input is used to capture text input, is hidden from user
+      var input = document.getElementById('input');
+          input.onkeydown = inputKeyDown;      
+          input.onpaste = input.oncut = function(e) {return false};
+      
+      // #Output is used to render #Input's value
+      var output = document.getElementById('output');
+          output.onkeydown = outputKeyDown;      
+          output.oncut = output.onpaste = function(e) {return false};
+
+      // Keep focus on input unless the user has selected text
+      output.onkeyup = document.onmouseup = function (e) {
+         if (!selectedText()) {return setFocus(input)}
+      };
 
       // Add the first p tag to a new document
-      if (!input.innerHTML) {input.innerHTML += '<p>&#xfeff;</p>'};
       // The zero width character allows us to set the caret's position inside the p tag
-
-      // Tell output to render the text in input
-      setHTMLof(output).to(input);
-
-      // Move the user's real caret to input
-      setFocus(input);
-
+      if (isEmpty()) {setContents('<p>&#xfeff;</p>')};
    };
 
-   input.onkeydown = function (e) {      
+   function inputKeyDown (e) {      
       
       var keyCode = e.which;
 
@@ -66,7 +68,6 @@ var typewriter = function () {
 
          // In order to set focus correctly on a content editable div,
          // we add a zero-width character inside the new p.
-
          input.innerHTML += '<p>&#xfeff;</p>'; 
          e.preventDefault();
       };
@@ -75,7 +76,6 @@ var typewriter = function () {
       if(keyCode === 9) {
 
          // We want the tab key to behave like one in a text editor.
-
          input.lastChild.innerHTML += '&nbsp;&nbsp;';
          e.preventDefault();
       };
@@ -91,9 +91,9 @@ var typewriter = function () {
          return moveViewportToBottom(); 
       }, 0);
 
-   }
+   };
 
-   output.onkeydown = function (e) {      
+   function outputKeyDown (e) {      
       
       var keyCode = e.which;
 
@@ -129,15 +129,6 @@ var typewriter = function () {
       // But disable everything else
       e.preventDefault();
       return setFocus(input);         
-   };
-
-   // Disable Cut and Paste
-   output.oncut = output.onpaste =
-   input.onpaste = input.oncut = function(e) {return false};
-
-   // Keep focus on input unless the user has selected text
-   output.onkeyup = document.onmouseup = function (e) {
-      if (!selectedText()) {return setFocus(input)}
    };
 
    // Takes the user's current text selection and strike it out
@@ -231,6 +222,31 @@ var typewriter = function () {
       return range.commonAncestorContainer.nodeName !== '#text'
    };
 
+   function setContents (html) {
+      
+      output.innerHTML = input.innerHTML = html;
+
+      setFocus(input);
+   };
+
+   function enableCaret () {
+      output.setAttribute('class', '');      
+      setFocus(input);
+   };
+
+   function disableCaret () {
+      output.setAttribute('class', 'blurred');
+   };
+
+   function isEmpty () {
+      return input.textContent.trim() === ''
+   };
+
+   function getHTMLof (id) {
+      var node = document.getElementById(id);
+      return node.innerHTML
+   }
+
    // Used to synchronize the contents of two nodes
    function setHTMLof (oldNode) {
       return {
@@ -284,8 +300,13 @@ var typewriter = function () {
    return {
       init: init,
       setHTMLof: setHTMLof,
+      getHTMLof: getHTMLof,
+      isEmpty: isEmpty,
+      disableCaret: disableCaret,
+      enableCaret: enableCaret,
+      setContents: setContents,
       setFocus: setFocus,
       strikeOut: strikeOut
    };
 
-};
+}());
