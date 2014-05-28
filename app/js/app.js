@@ -203,21 +203,38 @@ window.desktopApp = (function () {
     };
   };
 
-    })
+  function drawMenuBar () {
 
-  }
+    var file = new gui.Menu();
 
-  function filePicker (id, callback) {
-    var picker = document.getElementById(id);
+    file.append(new gui.MenuItem({
+      label: 'New             ⌘N',
+      click: function () {focussedWindow().desktopApp.newWindow()}
+    }));
 
-    picker.addEventListener('change', function(e){
+    file.append(new gui.MenuItem({
+      label: 'Open…\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A\u200A⌘O',
+      click: function() {focussedWindow().desktopApp.newWindow({open: true})}
+    }));
 
-      return callback(this.value)
+    file.append(new gui.MenuItem({
+      label: 'Save\u200A\u200A            ⌘S',
+      click: function() {focussedWindow().desktopApp.saveFile()}
+    }));
 
-    }, false);
+    file.append(new gui.MenuItem({
+      type: 'separator'
+    }));
 
-    picker.click();
-  }
+    file.append(new gui.MenuItem({
+      label: 'Print\u200A\u200A\u200A\u200A           ⌘P',
+      click: function() {focussedWindow().window.print()}
+    }));
+
+    currentWindow.menu = new gui.Menu({type: 'menubar'});
+    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
+  };
+
 
   function fileIsOpen (path) {
 
