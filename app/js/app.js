@@ -100,28 +100,34 @@ window.desktopApp = (function () {
       // Populate the typewriter with the contents of the file
       readFile();
 
-  document.onkeyup = function (e) {
-    if (document.filePath) {
-      saveFile()
-    }
+    });
   };
 
-  function newFile (openFile) {
+  function saveFile (callback) {
 
-    var newX = currentWindow.x + 32,
-        newY = currentWindow.y + 32;
-        url = windowView + '?x=' + newX + '&y=' + newY;
+    // If we have a filepath, write the data there
+    if (filePath) {
 
-    if (openFile) {
-       url += '&openFile=true' // Tells the new window to open the select file interface
-    }
+      // Get the text to save to disk
+      var text = htmlToText(typewriter.getHTMLof('output'));
+    
+      return fs.writeFile(filePath, text, function(err){
+        
+        if (err) {throw(err)};
 
-    gui.Window.open(url, windowPrefs);
-  }
+        if (callback) {return callback()};
+      });
+    };
 
-  function openFile () {
-     newFile(true);
-  };
+    // Otherwise ask the user to pick a location to save the file
+    openFilePicker('saveFile', function(value){
+      
+      filePath = value;
+
+      // If we just overwrote a file already open, close that window
+      if (global.typewriter.openFiles[filePath]) {
+        global.typewriter.openFiles[filePath].close(true);
+      };
 
   function removeWindow (currentWindow) {
     for (var i in global.typewriter.openWindows) {
