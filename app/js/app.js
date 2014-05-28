@@ -75,22 +75,30 @@ window.desktopApp = (function () {
     gui.Window.open(url, defaultWindow);
   };
 
-      // CMD + S
-      if (keyCode === 83 && e.metaKey) {
-          saveFile();
+  function openFile () {
+
+    openFilePicker('readFile', function(value){
+      
+      filePath = value;
+
+      // Check if this file is already open
+      if (global.typewriter.openFiles[filePath]) {
+        
+        // If so focus the window editing it
+        global.typewriter.openFiles[filePath].focus(); 
+
+        // And close this window
+        return currentWindow.close(true);
       };
 
-      // CMD + O
-      if (keyCode === 79 && e.metaKey) {
-        openFile();
-      };
-
-      if (keyCode === 81 && e.metaKey) {
-        e.preventDefault();
-        global.typewriter.quit = true;
-        closeFile();
-      }
-  };
+      // Update this window's title 
+      currentWindow.title = fileNameFrom(filePath);
+      
+      // Let other windows know this file is open
+      global.typewriter.openFiles[filePath] = currentWindow;
+      
+      // Populate the typewriter with the contents of the file
+      readFile();
 
   document.onkeyup = function (e) {
     if (document.filePath) {
