@@ -129,16 +129,15 @@ window.desktopApp = (function () {
         global.typewriter.openFiles[filePath].close(true);
       };
 
-  function removeWindow (currentWindow) {
-    for (var i in global.typewriter.openWindows) {
+      // Let other windows know the file is open in this window
+      global.typewriter.openFiles[filePath] = currentWindow;
 
-      var openWindow = global.typewriter.openWindows[i];
+      // Update the window title
+      currentWindow.title = fileNameFrom(filePath);
 
-      if (openWindow === currentWindow) {
-        global.typewriter.openWindows.splice(i, 1);
-        return 
-      };
-    }
+      // Save the file's contents to disk
+      return saveFile(callback);
+    });     
   };
 
   function closeFile () {
