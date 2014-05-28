@@ -193,9 +193,15 @@ window.desktopApp = (function () {
     picker.click();
   };
 
-      currentWindow.title = document.fileName;
+  // Adds any selected text to keyboard
+  function copytext () {
+    if (selectedText()) {
+      var clipboard = gui.Clipboard.get(),
+          text = selectedText().toString();
 
-      updateFile(document.filePath);
+      return clipboard.set(text, 'text');
+    };
+  };
 
     })
 
