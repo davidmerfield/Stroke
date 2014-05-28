@@ -235,63 +235,44 @@ window.desktopApp = (function () {
     currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
   };
 
+  function keyBoardShortcuts (e) {
+      
+    var keyCode = e.which;
 
-  function fileIsOpen (path) {
+    if (e.metaKey) {
+      
+      // CMD + C
+      if (keyCode == 67) {
+        copytext();
+      };
 
-    for (var i in global.typewriter.openWindows) {
+      // CMD + N
+      if (keyCode === 78) {
+        newWindow();
+      };
 
-      var openWindow = global.typewriter.openWindows[i],
-          openPath = global.typewriter.openWindows[i].window.document.filePath;
+      // CMD + O
+      if (keyCode === 79) {
+        newWindow({open: true});
+      };
 
-      if (openWindow === currentWindow) {continue};
+      // CMD + P 
+      if (keyCode == 80) {
+        window.print();
+      };
 
-      if (openPath === path) {return openWindow};
-    }
+      // CMD + Q
+      if (keyCode === 81) {
+        e.preventDefault();        
+        closeWindow({quit: true});
+      };
 
-    return false
-  }
-
-  function buildMenu () {
-     var menubar = new gui.Menu({ type: 'menubar' });
-     var file = new gui.Menu();
-     var win = gui.Window.get();
-
-     file.append(new gui.MenuItem({
-         label: 'New             ⌘N',
-         click: function() {
-         return newFile()
-         }
-     }));
-
-     file.append(new gui.MenuItem({
-         label: 'Open           ⌘O',
-         click: function() {
-           return openFile()
-         }
-     }));
-
-     file.append(new gui.MenuItem({
-         label: 'Save             ⌘S',
-         click: function() {
-           return saveFile()
-         }
-     }));
-     
-     file.append(new gui.MenuItem({ type: 'separator' }));
-
-     file.append(new gui.MenuItem({
-         label: 'Print             ⌘P',
-         click: function() {
-           return printFile()
-         }
-     }));
-
-     var help = new gui.Menu();
-
-     win.menu = menubar;
-     win.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
-     win.menu.append(new gui.MenuItem({ label: 'Help', submenu: help}));
-  }
+      // CMD + S
+      if (keyCode === 83) {
+        saveFile();
+      };
+    };
+  };
 
   function getParams () {
     var params = {};
