@@ -4,10 +4,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
       nodewebkit: {
         options: {
-            credits: "./app/credits.html",
+            credits: "./app/credits/index.html",
             build_dir: './builds', 
             mac: true, 
-            mac_icns: './app/Typewriter.icns',
+            mac_icns: './app/app.icns',
             win: false, 
             linux32: false,
             linux64: false 
