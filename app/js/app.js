@@ -274,17 +274,23 @@ window.desktopApp = (function () {
     };
   };
 
+  // Produces a dictionary from a series of url parameters
   function getParams () {
     var params = {};
     if (location.hash) {
-        var parts = location.hash.substring(7).split('&');
+
+        var hasParams = location.hash.indexOf('?');
+
+        if (hasParams > -1) {var parts = location.hash.slice(hasParams + 1)}
+
+        parts = parts.split('&');
 
         for (var i = 0; i < parts.length; i++) {
             var nv = parts[i].split('=');
             if (!nv[0]) continue;
             params[nv[0]] = nv[1] || true;
         }
-    }
+    };
     return params
   };
 
