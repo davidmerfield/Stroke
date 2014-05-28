@@ -16,9 +16,13 @@ window.desktopApp = (function () {
         show: false
       },
 
+      windowView = 'index.html#',
+      // the hash stops application cache freaking out when we pass params
+      // see: https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache#Gotchas
 
-  document.fileName = undefined;
-  document.filePath = undefined;
+      currentWindow, // refers to the app window this script will run in
+
+      filePath; // refers to the file being edited in this window
 
   function init () {
 
