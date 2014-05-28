@@ -207,18 +207,20 @@ window.desktopApp = (function () {
 
     var file = new gui.Menu();
 
+    // I wrote http://jsfiddle.net/DpgQy/ for generating menu labels of the right width
+
     file.append(new gui.MenuItem({
-      label: 'New                   ⌘N',
+      label: 'New                       ⌘N',
       click: function () {focussedWindow().desktopApp.newWindow()}
     }));
 
     file.append(new gui.MenuItem({
-      label: 'Open...       ⌘O',
+      label: 'Open...           ⌘O',
       click: function() {focussedWindow().desktopApp.newWindow({open: true})}
     }));
 
     file.append(new gui.MenuItem({
-      label: 'Save                  ⌘S',
+      label: 'Save                      ⌘S',
       click: function() {focussedWindow().desktopApp.saveFile()}
     }));
 
@@ -227,7 +229,7 @@ window.desktopApp = (function () {
     }));
 
     file.append(new gui.MenuItem({
-      label: 'Print                  ⌘P',
+      label: 'Print                      ⌘P',
       click: function() {focussedWindow().window.print()}
     }));
 
