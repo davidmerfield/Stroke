@@ -26,56 +26,42 @@ window.desktopApp = (function () {
 
   function init () {
 
-    var params = getParams();
+    currentWindow = gui.Window.get();
 
-    // Check if this is the first app window
+    // Check if this is the first application window
     if (!global.typewriter) {
 
-      // Store the current window
-      // This array is used to make sure we don't 
-      // open two windows containing the same file
-      global.typewriter = {
-        openWindows: [currentWindow],
-        quit: false
+      if (isFirstWindow()) {
+
+        drawMenuBar();        
       };
-
-      // If so draw the menu bar
-      buildMenu();
-
-    } else {
-
-      // Store the current window
-      global.typewriter.openWindows.push(currentWindow)
-    }
-
-    // Ensure the window is not on screen
-    currentWindow.x = -10000;
-    currentWindow.y = -10000;
-
-    // Set the window's size
-    sizeWindow();
-    
-    // Set the window's title
-    currentWindow.title = windowPrefs.title;
-
-    // Make the window visible
-    currentWindow.show();
-
-    // Set the focus on the window
-    currentWindow.focus();
-
-    // Move the window to the center of the screen
-    positionWindow(params);
-    
-    if (params.openFile) {
-      readFile();
     };
 
-    // Declare the handlers for window events
-    currentWindow.on('close', closeFile);
+    // Bind the handlers for window events
+    currentWindow.on('close', closeWindow);
     currentWindow.on('blur', windowBlur);
     currentWindow.on('focus', windowFocus);
 
+    // Retrieve any parameters passed to this window
+    var params = getParams();
+
+    // Set the window's title
+    currentWindow.title = defaultWindow.title;
+
+    // Set the window's size
+    sizeWindow();
+
+    // Set the window's position
+    positionWindow(params);
+    
+    // Open the read file dialog if the user requested it
+    if (params.openFile) {openFile()};
+
+    // Listen for keyboard shortcuts
+    document.onkeydown = keyBoardShortcuts;
+
+    // Autosave when the document changes
+    document.onkeyup = function (e) {if (filePath) {saveFile()}};
   };
 
   // Listen for app keyboard shortcuts
