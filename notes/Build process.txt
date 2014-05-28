@@ -26,4 +26,16 @@ Set 'windowView' in desktop_app.js to 'llllll.li/typewriter/app/index.html#cache
 
 Upload the contents of ./app to llllll.li/typewriter/app
 
+#### Appcache
 
+CACHE MANIFEST
+# Thu May 08 2014 18:10:44 GMT-0700 (PDT)
+
+index.html
+credits.html
+
+css/DroidSansMono.ttf
+css/style.css
+
+js/desktop_app.js
+js/typewriter.js
