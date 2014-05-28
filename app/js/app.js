@@ -140,28 +140,26 @@ window.desktopApp = (function () {
     });     
   };
 
-  function closeFile () {
+  function closeWindow (options) {
 
-    if (document.filePath === undefined && output.textContent.trim() !== '') {
+    // If we're quitting, let other windows know too
+    if (options && options.quit) {global.typewriter.quit = true};
 
-      var reallyClose = window.confirm("You have not yet saved your work. Do you still want to close this document?");
+    var closeConfirmation = "You have not yet saved your work. Do you still want to close this document?";
+
+    // Check if the user wants to save the file
+    if (!filePath && !typewriter.isEmpty() && !window.confirm(closeConfirmation)) {
       
-      if (!reallyClose) {
-        global.typewriter.quit = false;
-        return saveFile(true);               
-      }
+      // If so then pause the quit process
+      global.typewriter.quit = false
 
-    } 
+      // and save the file
+      return saveFile(function() {
 
-    removeWindow(currentWindow);
-    return currentWindow.close(true);   
-      
-  
-  }
-
-  function saveFile (thenClose) {
-
-    var text = htmlToText(output.innerHTML);
+        // If the file was saved, then resume quitting
+        closeWindow({quit: true})
+      });               
+    };
 
     if (document.filePath !== undefined) {
       return fs.writeFile(document.filePath, text, function(err) {
