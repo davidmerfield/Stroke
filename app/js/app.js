@@ -1,27 +1,21 @@
 window.desktopApp = (function () {
 
-  var gui = require('nw.gui'),
-      fs = require('fs'),
+  var gui = require('nw.gui'), 
+      fs = require('fs'), 
 
-      input = document.getElementById('input'), 
-      output = document.getElementById('output'), 
-
-      currentWindow = gui.Window.get(),
-
-      windowView = 'index.html#cache',
-
-      windowPrefs = {
+      defaultWindow = {
         position: 'center',
         title: 'Untitled',
         width: 712,
         height: 820,
-        show: false,
-        focus: false,
+        min_width: 300,
+        min_height: 300,
         frame: true,
         toolbar: false,
-        min_width: 300,
-        min_height: 300
-      };
+        focus: false,
+        show: false
+      },
+
 
   document.fileName = undefined;
   document.filePath = undefined;
