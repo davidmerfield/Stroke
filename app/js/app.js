@@ -406,19 +406,41 @@ window.desktopApp = (function () {
     readFile();
   };
 
-  function windowFocus () {    
-    
-    output.setAttribute('class', '');
-    
-    typewriter().setFocus(input);
-    
-    if (global.typewriter.quit) {currentWindow.close()}
+  function focussedWindow () {
+    return global.typewriter.focussedWindow.window
+  };
 
+  // set up global object for first window
+  function isFirstWindow () {
+    
+    if (!global.typewriter) {
+      
+      // used to prevent same file open in multiple windows
+      global.typewriter = {openFiles: {}};
+
+      return true
+    } else {
+      return false
+    };
   };
 
   function windowBlur () {
-    output.setAttribute('class', 'blurred');
+    typewriter.disableCaret();
+  };
+  
+  function selectedText() {
+     var selection = window.getSelection();
+     return selection.type === 'Range' ? selection : false;
   };
 
-  return init();
-}
+  function fileNameFrom (path) {
+    return path.replace(/^.*[\\\/]/, '')
+  };
+
+  return {
+    init: init,
+    newWindow: newWindow,
+    closeWindow: closeWindow,
+    saveFile: saveFile
+  };
+}());
