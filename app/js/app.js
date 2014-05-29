@@ -31,8 +31,6 @@ window.desktopApp = (function () {
     // Check if this is the first application window
     if (!global.typewriter) {
       
-      bindMenuBar();
-
       // used to prevent same file open in multiple windows
       global.typewriter = {};
     };
