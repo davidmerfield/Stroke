@@ -85,8 +85,19 @@ window.desktopApp = (function () {
       // Populate the typewriter with the contents of the file
       readFile(filePath, function (text){
 
-        typewriter.setContents(textToHTML(text));
+        if (!text) {return openFile()};
 
+        try {
+          
+          var html = textToHTML(text);
+          typewriter.setContents(html);
+
+        } catch (error) {
+
+          alert('The contents of "' + fileNameFrom(filePath) + '" could not be opened. Please select another file.')          
+          return openFile()
+
+        };
       });
     });
   };
@@ -101,8 +112,14 @@ window.desktopApp = (function () {
     fs.writeFile(filePath, text, function(err){
 
       if (err) {
+        
         setFilePath(false);
-        return saveFile(callback)
+                
+        if (err.code === 'ENOENT') {alert('Please select a valid location to save this document.')};
+        if (err.code === 'EACCES') {alert('You don\'t have permission to save this document there.')};
+
+        return saveFile(callback);
+
       } else {
 
         // Update the window title
@@ -159,13 +176,28 @@ window.desktopApp = (function () {
   function readFile (filePath, callback) {   
 
     // No file to read!
-    if (!filePath) {
-      return callback(false)
-    };
+    if (!filePath) {return callback(false)};
 
     fs.readFile(filePath, 'utf8', function(err, data) {
 
-      if (err) throw err;
+      if (err) {
+
+        setFilePath(false);
+        
+        switch (err.code) {
+          case 'ENOENT':
+            alert('Please select a valid path');
+            break;
+          case 'EACCES':
+            alert('You don\' have permission to open this document.');
+            break;
+          default:
+            alert('The file "' + fileNameFrom(filePath) + '" could not be opened. Please open another file.');
+            break;
+        };
+
+        return callback(false);
+      };
 
       return callback(data);
     });
