@@ -29,12 +29,10 @@ window.desktopApp = (function () {
     currentWindow = gui.Window.get();
 
     // Check if this is the first application window
-    if (!global.typewriter) {
+    if (isFirstWindow()) {
 
-      if (isFirstWindow()) {
-
-        drawMenuBar();        
-      };
+      // If so draw the menu bar
+      bindMenuBar();
     };
 
     // Bind the handlers for window events
@@ -98,7 +96,11 @@ window.desktopApp = (function () {
       global.typewriter.openFiles[filePath] = currentWindow;
       
       // Populate the typewriter with the contents of the file
-      readFile();
+      readFile(filePath, function (text){
+
+        typewriter.setContents(textToHTML(text));
+
+      });
 
     });
   };
@@ -168,16 +170,18 @@ window.desktopApp = (function () {
     return currentWindow.close(true);   
   };
 
-  function readFile () {   
+  function readFile (filePath, callback) {   
 
     // No file to read!
-    if (!filePath) {return};
+    if (!filePath) {
+      return callback(false)
+    };
 
     fs.readFile(filePath, 'utf8', function(err, data) {
 
       if (err) throw err;
 
-      typewriter.setContents(textToHTML(data));
+      return callback(data);
     });
   };
 
@@ -203,7 +207,9 @@ window.desktopApp = (function () {
     };
   };
 
-  function drawMenuBar () {
+  // if the window which draws the menu bar is closed,
+  // then thesefunctions wont work
+  function bindMenuBar () {
 
     var file = new gui.Menu();
 
@@ -211,17 +217,17 @@ window.desktopApp = (function () {
 
     file.append(new gui.MenuItem({
       label: 'New                       ⌘N',
-      click: function () {focussedWindow().desktopApp.newWindow()}
+      click: function() {newWindow()}
     }));
 
     file.append(new gui.MenuItem({
       label: 'Open...           ⌘O',
-      click: function() {focussedWindow().desktopApp.newWindow({open: true})}
+      click: function() {newWindow({open: true})}
     }));
 
     file.append(new gui.MenuItem({
       label: 'Save                      ⌘S',
-      click: function() {focussedWindow().desktopApp.saveFile()}
+      click: function() {saveFile()}
     }));
 
     file.append(new gui.MenuItem({
@@ -230,7 +236,7 @@ window.desktopApp = (function () {
 
     file.append(new gui.MenuItem({
       label: 'Print                      ⌘P',
-      click: function() {focussedWindow().window.print()}
+      click: function() {window.print()}
     }));
 
     currentWindow.menu = new gui.Menu({type: 'menubar'});
@@ -298,6 +304,9 @@ window.desktopApp = (function () {
 
   // takes text, returns html with p tags etc.
   function textToHTML (text) {
+
+    if (!text) {var text = ''};
+
     text = '<p>' + text;
     text = text.replace(/[\n]/gi, "</p><p>");
     if (text.slice(-3) === '<p>') {
@@ -394,17 +403,18 @@ window.desktopApp = (function () {
 
   function windowFocus () {
 
-    // Determine whether or not to close this window
-    if (global.typewriter.quit) {currentWindow.close()};
+    // make sure the menu bar functions apply to this window
+    bindMenuBar(); // this sometimes causes flashing 
 
     // let other windows know this window is in focus
     global.typewriter.focussedWindow = currentWindow;
 
+    // Determine whether or not to close this window
+    if (global.typewriter.quit) {currentWindow.close()};
+
     // make the caret visible
     typewriter.enableCaret();
 
-    // Update the file if it's changed elsewhere
-    readFile();
   };
 
   function focussedWindow () {
