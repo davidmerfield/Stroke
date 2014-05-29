@@ -300,10 +300,9 @@ window.desktopApp = (function () {
   function textToHTML (text) {
     text = '<p>' + text;
     text = text.replace(/[\n]/gi, "</p><p>");
-    text = text + '&#xfeff;</p>';
-    if (text.substring(text.length - 15) === '<p>&#xfeff;</p>') {
-      text = text.substring(0, text.length - 15);
-    }
+    if (text.slice(-3) === '<p>') {
+      text = text.slice(0, -3)
+    };
     return text
   };
 
