@@ -28,9 +28,11 @@ window.desktopApp = (function () {
 
     currentWindow = gui.Window.get();
 
+    currentWindow.menu = makeMenuBar();
+
     // Check if this is the first application window
     if (!global.typewriter) {
-      
+
       // used to prevent same file open in multiple windows
       global.typewriter = {};
     };
@@ -225,47 +227,6 @@ window.desktopApp = (function () {
     };
   };
 
-  // if the window which draws the menu bar is closed,
-  // then thesefunctions wont work
-  function bindMenuBar () {
-
-    var fileMenu = new gui.Menu();
-
-    // I wrote http://jsfiddle.net/DpgQy/ for generating menu labels of the right width
-
-    fileMenu.append(new gui.MenuItem({
-      label: 'New                       ⌘N',
-      click: function() {newWindow()}
-    }));
-
-    fileMenu.append(new gui.MenuItem({
-      label: 'Open...           ⌘O',
-      click: function() {newWindow({open: true})}
-    }));
-
-    fileMenu.append(new gui.MenuItem({
-      label: 'Save                      ⌘S',
-      click: function() {saveFile()}
-    }));
-
-    fileMenu.append(new gui.MenuItem({
-      type: 'separator'
-    }));
-
-    fileMenu.append(new gui.MenuItem({
-      label: 'Print                      ⌘P',
-      click: function() {window.print()}
-    }));
-
-    if (currentWindow.menu && currentWindow.menu.items[1]) {
-      return
-    };
-
-    currentWindow.menu = new gui.Menu({type: 'menubar'});
-    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: fileMenu}), 1);              
-
-  };
-
   function keyBoardShortcuts (e) {
       
     var keyCode = e.which;
@@ -424,11 +385,31 @@ window.desktopApp = (function () {
     }
   };
 
+  function makeMenuBar () {
+
+    // I wrote http://jsfiddle.net/DpgQy/ for generating menu labels of the right width
+
+    var fileSubMenu = new gui.Menu();
+        fileSubMenu.append(new gui.MenuItem({ label: 'New                       ⌘N', click: function(){newWindow()}}));
+        fileSubMenu.append(new gui.MenuItem({ label: 'Open...           ⌘O', click: function(){newWindow({open: true})}}));
+        fileSubMenu.append(new gui.MenuItem({ label: 'Save                      ⌘S', click: function(){saveFile()}}));
+        fileSubMenu.append(new gui.MenuItem({ type: 'separator'}));
+        fileSubMenu.append(new gui.MenuItem({ label: 'Print                      ⌘P', click: function(){window.print()}}));
+
+    var fileMenu = new gui.MenuItem({ label: 'File'});
+        fileMenu.submenu = fileSubMenu;
+
+    var menuBar = new gui.Menu({type: 'menubar'});
+        menuBar.insert(fileMenu, 1);
+
+    return menuBar
+
+  };
+
   function windowFocus () {
 
-    // make sure the menu bar functions apply to this window
-    // this sometimes causes flashing     
-    bindMenuBar(); 
+    // Ensure the menubar functions apply to this window
+    currentWindow.menu = makeMenuBar();
 
     // Determine whether or not to close this window
     if (global.typewriter.quit) {currentWindow.close()};
