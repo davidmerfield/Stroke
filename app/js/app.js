@@ -183,7 +183,7 @@ window.desktopApp = (function () {
       if (err) {
 
         setFilePath(false);
-        
+
         switch (err.code) {
           case 'ENOENT':
             alert('Please select a valid path');
@@ -229,8 +229,6 @@ window.desktopApp = (function () {
   // then thesefunctions wont work
   function bindMenuBar () {
 
-    currentWindow.menu = new gui.Menu({type: 'menubar'});
-
     var fileMenu = new gui.Menu();
 
     // I wrote http://jsfiddle.net/DpgQy/ for generating menu labels of the right width
@@ -259,7 +257,13 @@ window.desktopApp = (function () {
       click: function() {window.print()}
     }));
 
-    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: fileMenu}), 1);
+    if (currentWindow.menu && currentWindow.menu.items[1]) {
+      return
+    };
+
+    currentWindow.menu = new gui.Menu({type: 'menubar'});
+    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: fileMenu}), 1);              
+
   };
 
   function keyBoardShortcuts (e) {
