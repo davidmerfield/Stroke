@@ -79,7 +79,7 @@ window.desktopApp = (function () {
 
     openFilePicker('readFile', function(value){
       
-      filePath = value;
+      setFilePath(value);
 
       // Update this window's title 
       currentWindow.title = fileNameFrom(filePath);
@@ -95,7 +95,7 @@ window.desktopApp = (function () {
 
   function writeFile (callback) {
 
-    if (!filePath) {return};
+    if (!filePath) {return callback()};
 
     // Get the text to save to disk
     var text = htmlToText(typewriter.getHTMLof('output'));
@@ -103,14 +103,16 @@ window.desktopApp = (function () {
     fs.writeFile(filePath, text, function(err){
 
       if (err) {
-        filePath = false;
+        setFilePath(false);
         return saveFile(callback)
+      } else {
+
+        // Update the window title
+        currentWindow.title = fileNameFrom(filePath);
+
+        if (callback) {return callback()};
+
       };
-
-      // Update the window title
-      currentWindow.title = fileNameFrom(filePath);
-
-      if (callback) {return callback()};
     });
   };
 
@@ -124,7 +126,7 @@ window.desktopApp = (function () {
     // Otherwise ask the user to pick a location to save the file
     openFilePicker('saveFile', function(value){
       
-      filePath = value;
+      setFilePath(value);
 
       // Save the file's contents to disk
       return writeFile(callback);
@@ -406,6 +408,29 @@ window.desktopApp = (function () {
     typewriter.disableCaret();
   };
   
+  function setFilePath (path) {
+    filePath = path;
+    window.filePath = path;
+
+    if (filePath) {
+
+      var otherWindow = isFileAlreadyOpen(path);
+
+      if (otherWindow){otherWindow.close(true)};
+
+      global.allOpenFiles = global.allOpenFiles || {};
+      global.allOpenFiles[filePath] = currentWindow;
+    };
+  };
+
+  function isFileAlreadyOpen (path) {
+    if (global.allOpenFiles &&
+        global.allOpenFiles[path] &&
+        global.allOpenFiles[path] !== currentWindow) {
+      return global.allOpenFiles[path]
+    };
+  };
+
   function selectedText() {
      var selection = window.getSelection();
      return selection.type === 'Range' ? selection : false;
