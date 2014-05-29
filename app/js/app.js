@@ -29,10 +29,12 @@ window.desktopApp = (function () {
     currentWindow = gui.Window.get();
 
     // Check if this is the first application window
-    if (isFirstWindow()) {
-
-      // If so draw the menu bar
+    if (!global.typewriter) {
+      
       bindMenuBar();
+
+      // used to prevent same file open in multiple windows
+      global.typewriter = {};
     };
 
     // Bind the handlers for window events
@@ -79,21 +81,8 @@ window.desktopApp = (function () {
       
       filePath = value;
 
-      // Check if this file is already open
-      if (global.typewriter.openFiles[filePath]) {
-        
-        // If so focus the window editing it
-        global.typewriter.openFiles[filePath].focus(); 
-
-        // And close this window
-        return currentWindow.close(true);
-      };
-
       // Update this window's title 
       currentWindow.title = fileNameFrom(filePath);
-      
-      // Let other windows know this file is open
-      global.typewriter.openFiles[filePath] = currentWindow;
       
       // Populate the typewriter with the contents of the file
       readFile(filePath, function (text){
@@ -101,24 +90,35 @@ window.desktopApp = (function () {
         typewriter.setContents(textToHTML(text));
 
       });
+    });
+  };
 
+  function writeFile (callback) {
+
+    if (!filePath) {return};
+
+    // Get the text to save to disk
+    var text = htmlToText(typewriter.getHTMLof('output'));
+    
+    fs.writeFile(filePath, text, function(err){
+
+      if (err) {
+        filePath = false;
+        return saveFile(callback)
+      };
+
+      // Update the window title
+      currentWindow.title = fileNameFrom(filePath);
+
+      if (callback) {return callback()};
     });
   };
 
   function saveFile (callback) {
 
-    // If we have a filepath, write the data there
+    // If we have a filePath, write the data there
     if (filePath) {
-
-      // Get the text to save to disk
-      var text = htmlToText(typewriter.getHTMLof('output'));
-    
-      return fs.writeFile(filePath, text, function(err){
-        
-        if (err) {throw(err)};
-
-        if (callback) {return callback()};
-      });
+      return writeFile(callback)
     };
 
     // Otherwise ask the user to pick a location to save the file
@@ -126,19 +126,8 @@ window.desktopApp = (function () {
       
       filePath = value;
 
-      // If we just overwrote a file already open, close that window
-      if (global.typewriter.openFiles[filePath]) {
-        global.typewriter.openFiles[filePath].close(true);
-      };
-
-      // Let other windows know the file is open in this window
-      global.typewriter.openFiles[filePath] = currentWindow;
-
-      // Update the window title
-      currentWindow.title = fileNameFrom(filePath);
-
       // Save the file's contents to disk
-      return saveFile(callback);
+      return writeFile(callback);
     });     
   };
 
@@ -162,9 +151,6 @@ window.desktopApp = (function () {
         closeWindow({quit: true})
       });               
     };
-
-    // Let other windows know this file is no longer open
-    if (filePath) {delete global.typewriter.openFiles[filePath]};
 
     // And finally close this window
     return currentWindow.close(true);   
@@ -211,36 +197,37 @@ window.desktopApp = (function () {
   // then thesefunctions wont work
   function bindMenuBar () {
 
-    var file = new gui.Menu();
+    currentWindow.menu = new gui.Menu({type: 'menubar'});
+
+    var fileMenu = new gui.Menu();
 
     // I wrote http://jsfiddle.net/DpgQy/ for generating menu labels of the right width
 
-    file.append(new gui.MenuItem({
+    fileMenu.append(new gui.MenuItem({
       label: 'New                       ⌘N',
       click: function() {newWindow()}
     }));
 
-    file.append(new gui.MenuItem({
+    fileMenu.append(new gui.MenuItem({
       label: 'Open...           ⌘O',
       click: function() {newWindow({open: true})}
     }));
 
-    file.append(new gui.MenuItem({
+    fileMenu.append(new gui.MenuItem({
       label: 'Save                      ⌘S',
       click: function() {saveFile()}
     }));
 
-    file.append(new gui.MenuItem({
+    fileMenu.append(new gui.MenuItem({
       type: 'separator'
     }));
 
-    file.append(new gui.MenuItem({
+    fileMenu.append(new gui.MenuItem({
       label: 'Print                      ⌘P',
       click: function() {window.print()}
     }));
 
-    currentWindow.menu = new gui.Menu({type: 'menubar'});
-    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: file}), 1);
+    currentWindow.menu.insert(new gui.MenuItem({ label: 'File', submenu: fileMenu}), 1);
   };
 
   function keyBoardShortcuts (e) {
@@ -404,10 +391,8 @@ window.desktopApp = (function () {
   function windowFocus () {
 
     // make sure the menu bar functions apply to this window
-    bindMenuBar(); // this sometimes causes flashing 
-
-    // let other windows know this window is in focus
-    global.typewriter.focussedWindow = currentWindow;
+    // this sometimes causes flashing     
+    bindMenuBar(); 
 
     // Determine whether or not to close this window
     if (global.typewriter.quit) {currentWindow.close()};
@@ -415,24 +400,6 @@ window.desktopApp = (function () {
     // make the caret visible
     typewriter.enableCaret();
 
-  };
-
-  function focussedWindow () {
-    return global.typewriter.focussedWindow.window
-  };
-
-  // set up global object for first window
-  function isFirstWindow () {
-    
-    if (!global.typewriter) {
-      
-      // used to prevent same file open in multiple windows
-      global.typewriter = {openFiles: {}};
-
-      return true
-    } else {
-      return false
-    };
   };
 
   function windowBlur () {
