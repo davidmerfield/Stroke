@@ -496,6 +496,8 @@ window.desktopApp = (function () {
     // Determine whether or not to close this window
     if (isQuitting()) {currentWindow.close()};
 
+    // Ensure the menubar functions apply to this window
+    currentWindow.menu = makeMenuBar();
 
     // make the caret visible
     typewriter.enableCaret();
