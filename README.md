@@ -2,7 +2,7 @@
 
 A text editor for first drafts built using [node-webkit](https://github.com/rogerwang/node-webkit). You should [download the app here](http://llllll.li/typewriter/).
 
-![Imgur](http://i.imgur.com/bKYCwSl.png)
+[![Imgur](http://i.imgur.com/bKYCwSl.png)](http://llllll.li/typewriter/)
 
 #### License
 
