@@ -112,8 +112,6 @@ window.desktopApp = (function () {
 
   function writeFile (callback) {
 
-    if (!filePath) {return callback()};
-
     // Get the text to save to disk
     var text = htmlToText(typewriter.getHTMLof('output'));
     
@@ -142,9 +140,7 @@ window.desktopApp = (function () {
   function saveFile (callback) {
 
     // If we have a filePath, write the data there
-    if (filePath) {
-      return writeFile(callback)
-    };
+    if (filePath) {return writeFile(callback)};
 
     // Otherwise ask the user to pick a location to save the file
     openFilePicker('saveFile', function(value){
@@ -486,7 +482,7 @@ window.desktopApp = (function () {
   };
 
   function fileNameFrom (path) {
-    return path.replace(/^.*[\\\/]/, '')
+    return path.slice(path.lastIndexOf("/") + 1)
   };
 
   function windowFocus () {

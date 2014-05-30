@@ -223,7 +223,6 @@ var typewriter = (function () {
    };
 
    function setContents (html) {
-            
       output.innerHTML = input.innerHTML = html;
 
       setFocus(input);
