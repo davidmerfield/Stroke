@@ -66,11 +66,17 @@ window.desktopApp = (function () {
 
   function newWindow (options) {
 
-    // We pass the position of the current window to help position the new window
-    var url = windowView + '?x=' + currentWindow.x + '&y=' + currentWindow.y;
+    // If we can't open windows then don't
+    if (!canOpenNewWindows()) {return false};
+
+    var options = options || {},
+        url = windowView + '?x=' + currentWindow.x + '&y=' + currentWindow.y + '&';
 
     // Tells the new window to open the select file interface
-    if (options && options.open) {url += '&openFile=true'};
+    if (options.open) {url += 'openFile=true'};
+
+    // Tell other windows not to open any new ones
+    canOpenNewWindows(false);
 
     gui.Window.open(url, defaultWindow);
   };
@@ -152,27 +158,34 @@ window.desktopApp = (function () {
 
   function closeWindow (options) {
 
-    // If we're quitting, let other windows know too
-    if (options && options.quit) {global.typewriter.quit = true};
+    var options = options || {};
 
-    var closeConfirmation = "You have not yet saved your work. Do you still want to close this document?";
+    // If we're quitting, let other windows know too
+    if (options.quit) {isQuitting(true)};
+
+    if (options.force || filePath || typewriter.isEmpty()) {
+      return currentWindow.close(true)
+    };
+
+    var closeConfirmation = window.confirm("You have not yet saved your work. Do you still want to close this document?");
 
     // Check if the user wants to save the file
-    if (!filePath && !typewriter.isEmpty() && !window.confirm(closeConfirmation)) {
+    if (!closeConfirmation) {
       
+      var wasQuitting = isQuitting();
+
       // If so then pause the quit process
-      global.typewriter.quit = false
+      isQuitting(false)
 
       // and save the file
       return saveFile(function() {
 
         // If the file was saved, then resume quitting
-        closeWindow({quit: true})
+        closeWindow({quit: wasQuitting})
       });               
+    } else {
+      return closeWindow({force: true})
     };
-
-    // And finally close this window
-    return currentWindow.close(true);   
   };
 
   function readFile (filePath, callback) {   
@@ -406,23 +419,6 @@ window.desktopApp = (function () {
 
   };
 
-  function windowFocus () {
-
-    // Ensure the menubar functions apply to this window
-    currentWindow.menu = makeMenuBar();
-
-    // Determine whether or not to close this window
-    if (global.typewriter.quit) {currentWindow.close()};
-
-    // make the caret visible
-    typewriter.enableCaret();
-
-  };
-
-  function windowBlur () {
-    typewriter.disableCaret();
-  };
-  
   function setFilePath (path) {
     filePath = path;
     window.filePath = path;
@@ -461,6 +457,29 @@ window.desktopApp = (function () {
     if (force) {canOpenNewWindows(true)};
     setTimeout(function(){canOpenNewWindows(true)}, 100);    
   };
+
+  function canOpenNewWindows (state) {
+
+    global.typewriter = global.typewriter || {};
+
+    if (state !== undefined) {
+      global.typewriter.canOpen = state
+    }
+
+    return !!global.typewriter.canOpen
+  };
+
+  function isQuitting (state) {
+    
+    global.typewriter = global.typewriter || {};
+
+    if (state !== undefined) {
+      global.typewriter.quit = state
+    }
+
+    return !!global.typewriter.quit
+  };
+
   function selectedText() {
      var selection = window.getSelection();
      return selection.type === 'Range' ? selection : false;
@@ -468,6 +487,23 @@ window.desktopApp = (function () {
 
   function fileNameFrom (path) {
     return path.replace(/^.*[\\\/]/, '')
+  };
+
+  function windowFocus () {
+
+    allowNewWindows();
+
+    // Determine whether or not to close this window
+    if (isQuitting()) {currentWindow.close()};
+
+
+    // make the caret visible
+    typewriter.enableCaret();
+
+  };
+
+  function windowBlur () {
+    typewriter.disableCaret();
   };
 
   return {
