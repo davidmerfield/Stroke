@@ -28,13 +28,13 @@ window.desktopApp = (function () {
 
     currentWindow = gui.Window.get();
 
+    // Make sure the menubar functions are bound to this window
     currentWindow.menu = makeMenuBar();
 
-    // Check if this is the first application window
-    if (!global.typewriter) {
-
-      // used to prevent same file open in multiple windows
-      global.typewriter = {};
+    // If this is the first window, open a new window with our options
+    if (isFirstAppWindow()) {
+      gui.Window.open(windowView, defaultWindow);
+      return currentWindow.close(true);
     };
 
     // Bind the handlers for window events
@@ -446,6 +446,21 @@ window.desktopApp = (function () {
     };
   };
 
+  function isFirstAppWindow() {
+    // Check if this is the first application window
+    if (!global.typewriter) {
+      // used to prevent same file open in multiple windows
+      global.typewriter = {};
+
+      return true
+    };
+    return false
+  };
+
+  function allowNewWindows(force) {
+    if (force) {canOpenNewWindows(true)};
+    setTimeout(function(){canOpenNewWindows(true)}, 100);    
+  };
   function selectedText() {
      var selection = window.getSelection();
      return selection.type === 'Range' ? selection : false;
