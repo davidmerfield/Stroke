@@ -1,15 +1,8 @@
-![Imgur](http://i.imgur.com/8pWIifK.png)
 ### Typewriter
 
-Typewriter is a simple text editor. Every letter you type is permanent. A bit like a real typewriter. You can't delete your mistakes but you can strike them out.
-﻿
-Typewriter is perfect for first drafts and overcoming writer's block.
+A text editor for first drafts built using [node-webkit](https://github.com/rogerwang/node-webkit). You should [download the app here](http://llllll.li/typewriter/).
 
-You should [download the app here](http://llllll.li/typewriter/).
-
-#### About
-
-Typewriter was built using [node-webkit](https://github.com/rogerwang/node-webkit).
+![Imgur](http://i.imgur.com/bKYCwSl.png)
 
 #### License
 
