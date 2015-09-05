@@ -10,4 +10,4 @@ Typewriter was built using [node-webkit](https://github.com/rogerwang/node-webki
 
 #### License
 
-This project is licensed under the terms of the MIT license.
+This project is released into the public domain.
