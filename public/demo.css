@@ -1,0 +1,157 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+html, body {
+   position: absolute;
+   top: 0;bottom: 0;
+   left: 0;right: 0;
+   background: #fff;
+   font: 400 1em / 1.5em 'Droid Sans Mono', monospace;
+}
+
+h1 {
+   font-size: 2em;
+   line-height: 1.66em;
+   color: #111;
+   text-transform: uppercase;
+   letter-spacing: 0.1566em
+}
+
+h2 {
+   margin-bottom: 2em;
+   color: rgba(0,0,0,0.55);
+}
+
+#homepage {
+   position: absolute;
+   top: 10%;
+   bottom: 10%;
+   left: 5%;
+   right: 5%;
+}
+
+#demo {
+   position: absolute;
+   top: 50%;
+   margin-top: -306px;
+   left: 30%;
+   width: 65%;
+   border-bottom: none;
+   max-width: 860px;
+   padding: 0 116px;
+   height: 612px;
+   background: none   
+}
+
+#output, #demo:before, #demo:after {
+   background: url('./images/demo.png') repeat-x 0 0;
+   background-size: 232px;
+   height: 612px;
+}
+
+#demo:before, #demo:after {
+   position: absolute;
+   content: ' ';
+   top: 0;
+   width: 116px;
+   height: 100%;
+}
+
+#demo:before {
+   left: 0;
+   background-position: 0 -612px;
+}
+
+#demo:after {
+   right: 0;
+   background-position: -116px -612px;
+}
+
+
+#output {
+   padding: 5em 0;
+   margin: 0;
+   z-index: 1000;
+   overflow: hidden;
+}
+
+/* Stops the cursor from blinking */
+#output.solidCursor p:last-child:after {-webkit-animation: none}
+#output:after {display: none}
+
+#text_container {
+   position: absolute;
+   top: 0;
+   right: 70%;
+   width: 30%;
+   bottom: 0;
+}
+
+#text {
+   position: absolute;
+   text-align: center;
+   top: 50%;
+   margin-top: -9em;
+   width: 20em;
+   right: 2em;
+}
+
+#download {
+   text-decoration: none;
+   color: #584200;
+   background: #ffc820;
+   padding: 0.66em 1em;
+   border-radius: 0.33em;
+}
+
+#download:hover {
+   text-decoration: underline;
+}
+
+
+#about {
+   position: absolute;
+   bottom: 1em;
+   left: 0;
+   width: 100%;
+   text-align: center;
+   z-index: 10000;
+}
+
+#about a,
+#downloaded a {
+   font-size: 0.88em;
+   color: rgba(0,0,0,0.35);
+   text-decoration: none;
+}
+
+#about a em,
+#downloaded a em {
+   font-weight: normal;
+   font-style: normal;
+   border-bottom: 2px solid rgba(0,0,0,0.1)
+}
+
+#downloaded a {
+   color: rgba(0,0,0,0.55);
+   font-size: 1em;
+}
+
+#downloaded {
+   position: absolute;
+   top: 50%;
+   height: 20em;
+   margin-top: -10em;
+   left: 50%;
+   width: 50em;
+   margin-left: -25em;
+   text-align: center;
+}
+
+#downloaded h1 {text-transform: none;letter-spacing: 0;font-weight: 400;line-height: 1em}
+
+/* All the elements will scale because their dimensions are declared in ems */
+@media all and (max-width: 960px) and (min-width: 1px) {
+  #demo, #text_container {width: 100%;display: block;left:0;right:0;position: relative;margin: 0} 
+  #text_container {height: 300px}
+  #text {width: 100%;position: relative;right: 0;left: 0;top: 0;margin: 0}
+}

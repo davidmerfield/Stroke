@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name=viewport content="width=device-width,initial-scale=1">
+      <title>Typewriter</title>
+      <link id="favicon" rel="shortcut icon" type="image/png" href="images/typewriter.png" />
+      <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="./app/css/style.css">
+      <link rel="stylesheet" href="./demo.css">
+      <script src="./app/js/typewriter.js"></script>
+      <script src="./demo.js"></script>
+   </head>
+   <body>
+      <section id="homepage">
+         <section id="text_container">
+            <section id="text">
+              <h1>Typewriter</h1>
+              <h2>A text editor for first drafts.</h2>
+              <a id="download" href="./download/" href="#">Download the app</a>
+
+              <br /><br /><br /><br />
+              <p style="font-size:14px">“Oh, another hipster text editor.<br /> This time, you can’t edit.”</p>
+              <p style="color: rgba(0,0,0,0.55);font-size:14px;">Ian Bogost, <em>The Atlantic</em> <!-- https://twitter.com/ibogost/status/464021327368560640 http://i.imgur.com/3qz1ufn.png --></p>
+            </section>
+         </section>
+         <div id="demo">
+            <section id="input" contenteditable="true"></section>
+            <section id="output" contenteditable="true" spellcheck="false"></section>
+            <section id="about">
+              <a href="http://twitter.com/davidmerfieId">Made by <em>David Merfield</em>.</a>
+              <a href="http://llllll.li">Check out my <em>other projects</em>.</a>
+               <a href="http://github.com/davidmerfield/typewriter">View <em>the source</em>.</a>
+            </section>
+         </div>
+      </section>
+      <script type="text/javascript">setTimeout(function(){demo();}, 1000);</script>
+   </body>
+</html>
