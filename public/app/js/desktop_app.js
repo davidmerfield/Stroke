@@ -8,7 +8,7 @@ var desktopApp = function () {
 
       currentWindow = gui.Window.get(),
 
-      windowView = 'http://llllll.li/typewriter/app/index.html#cache',
+      windowView = 'https://stroke.lllllllllllllllll.com/app/index.html#cache',
 
       windowPrefs = {
         position: 'center',
@@ -156,8 +156,8 @@ var desktopApp = function () {
       if (err) throw err;
 
       input.innerHTML = textToHTML(data);
-      typewriter().setHTMLof(output).to(input);
-      typewriter().setFocus(input);
+      stroke().setHTMLof(output).to(input);
+      stroke().setFocus(input);
 
     });
 
@@ -335,11 +335,11 @@ var desktopApp = function () {
   }
 
   function setQuitState (state) {
-    global.typewriterQuit = state;
+    global.strokeQuit = state;
   }
 
   function getQuitState () {
-    return global.typewriterQuit
+    return global.strokeQuit
   }
 
   return function init () {
@@ -376,7 +376,7 @@ var desktopApp = function () {
       currentWindow.on('focus', function(){
 
         output.setAttribute('class', '');
-        typewriter().setFocus(input);
+        stroke().setFocus(input);
         if (getQuitState()) {currentWindow.close()}
 
       });

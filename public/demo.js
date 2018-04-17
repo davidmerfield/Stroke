@@ -1,10 +1,3 @@
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-8666188-9', 'llllll.li');
-ga('send', 'pageview');
 
 var demo = function () {
    
@@ -87,8 +80,8 @@ var demo = function () {
             var selectedText = window.getSelection();
 
             return setTimeout(function(){
-               typewriter().strikeOut(selectedText);
-               typewriter().setFocus(input);
+               stroke().strikeOut(selectedText);
+               stroke().setFocus(input);
                return callback()
             }, makeDelay('long')); 
 
@@ -134,7 +127,7 @@ var demo = function () {
    return function () {
       // input.onkeydown = function(e){return e.preventDefault()};
 
-      typewriter().init();
+      stroke().init();
 
       output.innerHTML = '';
       input.innerHTML = '';
@@ -143,7 +136,7 @@ var demo = function () {
       input.setAttribute('style', 'display:none');
       output.setAttribute('class', 'solidCursor');               
 
-      type('Typewriter is a text editor.', function(){
+      type('Stroke is a text editor.', function(){
 
       newLine(function(){
       
@@ -155,13 +148,13 @@ var demo = function () {
 
       newLine(function(){
       
-      type('Typewriter is quite silly', function(){
+      type('Stroke is quite silly', function(){
 
       crossOut(6, function(){
        
       type(' useful for first drafts and overcoming writer\'s block.', function(){
       
-      typewriter().setHTMLof(input).to(output)
+      stroke().setHTMLof(input).to(output)
             
             output.setAttribute('class', '');               
             input.setAttribute('style', 'display:block');   
